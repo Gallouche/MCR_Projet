@@ -1,0 +1,8 @@
+MCR projet:
+
+- Voiture demarre le moteur
+- acclereation -> appelle getPuissance, et réparti la puissance entre les modules
+- freinage -> prend le frottement des roue et reduit la vitesse en fct de ce coefficient
+- eteindre -> coupe tout
+- alllumer phare = gadget
+- on passe un objet obstacle en parametre de la methode colision (voiture), les roues determine ce qu'il se passe (abimer, rien, detruire obstacle)
