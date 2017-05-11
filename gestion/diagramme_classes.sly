@@ -105,7 +105,7 @@
     </entity>
     <entity entityType="INTERFACE" id="3901" isAbstract="true" name="Roue" visibility="PUBLIC">
       <method isAbstract="true" isStatic="false" name="getHauteur" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
-      <method isAbstract="true" isStatic="false" name="coeffFrottement" returnType="double" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="getCoeffFrottement" returnType="double" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="true" isStatic="false" name="collisionObstacle" returnType="void" view="DEFAULT" visibility="PUBLIC">
         <variable const="false" name="Obstacle" type="obstacle"/>
       </method>
