@@ -1,2 +1,4 @@
-/carbridge/target/
-/carbridge/nbproject/
+*carbridge/target/
+*carbridge/nbproject/
+*.idea/
+*.iml
