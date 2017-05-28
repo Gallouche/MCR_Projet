@@ -13,6 +13,7 @@ public class Obstacle {
     public int getHauteur() {
         return 0;
     }
+
     public void destruire() {
         
     }
