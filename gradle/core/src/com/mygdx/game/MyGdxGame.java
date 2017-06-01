@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class MyGdxGame extends ApplicationAdapter
 {
-	SpriteBatch batch;
+	Batch batch;
 
 	Texture background1, background2, background3, background4, background5, voiture,
 			wheelTurbo, cloud1, cloud2, cloud3, cloud4;
@@ -29,17 +30,24 @@ public class MyGdxGame extends ApplicationAdapter
 	int scrollingTranslate3 = 0;
 	int scrollingTranslate4 = 0;
 	int rand1, rand2, rand3, rand4;
+
+	Texture menuTexture;
+	Sprite menu;
 	@Override
 	public void create ()
 	{
+		menuTexture = new Texture("./core/assets/menu.png");
+		menu = new Sprite(menuTexture);
+		menu.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+
 		batch = new SpriteBatch();
 		background1 = new Texture("./core/assets/backgroundScroll_.png");
 		background2 = new Texture("./core/assets/backgroundScrollBack.png");
 		background3 = new Texture("./core/assets/backgroundScrollBack1.png");
 		background4 = new Texture("./core/assets/backgroundScrollBack2.png");
 		background5 = new Texture("./core/assets/backgroundScrollBack3.png");
-		voiture =     new Texture("./core/assets/voiture.png");
-		wheelTurbo =  new Texture("./core/assets/wheelTurbo.png");
+		voiture     = new Texture("./core/assets/voiture.png");
+		wheelTurbo  = new Texture("./core/assets/wheelTurbo.png");
 		cloud1 = new Texture("./core/assets/cloud1.png");
 		cloud2 = new Texture("./core/assets/cloud2.png");
 		cloud3 = new Texture("./core/assets/cloud3.png");
@@ -91,6 +99,7 @@ public class MyGdxGame extends ApplicationAdapter
 	@Override
 	public void render ()
 	{
+
 		cloudS1.setX(cloudS1.getX()+ rand1);
 		cloudS2.setX(cloudS2.getX()+ rand2);
 		cloudS3.setX(cloudS3.getX()+ rand3);
@@ -100,7 +109,7 @@ public class MyGdxGame extends ApplicationAdapter
 		{
 			scrollingTranslate1 -= 4;
 			scrollingTranslate2 -= 1;
-			scrollingTranslate3 -=3;
+			scrollingTranslate3 -= 3;
 			wheelTurboS1.setRotation(wheelTurboS1.getRotation()-5);
 			wheelTurboS2.setRotation(wheelTurboS2.getRotation()-5);
 		}
@@ -151,7 +160,10 @@ public class MyGdxGame extends ApplicationAdapter
 		cloudS2.draw(batch);
 		cloudS3.draw(batch);
 		cloudS4.draw(batch);
+
+		menu.draw(batch);
 		batch.end();
+
 	}
 	
 	@Override
