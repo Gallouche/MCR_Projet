@@ -32,7 +32,7 @@ public interface Roue {
      * Collision avec un obstacle.
      * @param obstacle l'obstacle heurté
      */
-    public void collision(Obstacle obstacle);
+    public void collision(Obstacle obstacle, double vitesse);
     
     /**
      * La solidité actuelle de la roue. Une solidité de 0 devrait
