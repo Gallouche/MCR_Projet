@@ -5,25 +5,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyGdxGame extends ApplicationAdapter
 {
-	Batch batch;
-
-	Texture background1, background2, background3, background4, background5, voiture,
+	Texture background1, background2, background3, background4, background5, voiture, voitureTurbo,
 			wheelTurbo, cloud1, cloud2, cloud3, cloud4;
 
-	Sprite backgroundScroll1, backgroundScroll2, backgroundScrollBack1, backgroundScrollBack2,
+	Image backgroundScroll1, backgroundScroll2, backgroundScrollBack1, backgroundScrollBack2,
 			backgroundScrollBackBack1, backgroundScrollBackBack2,
 			backgroundScrollBackBackBack1, backgroundScrollBackBackBack2, backgroundSun, voitureS, wheelTurboS1, wheelTurboS2,
 			cloudS1, cloudS2, cloudS3, cloudS4;
-	List<Sprite> listClouds;
+	List<Image> listClouds;
 
 	int scrollingTranslate1 = 0;
 	int scrollingTranslate2 = 0;
@@ -31,32 +34,202 @@ public class MyGdxGame extends ApplicationAdapter
 	int scrollingTranslate4 = 0;
 	int rand1, rand2, rand3, rand4;
 
-	Texture menuTexture;
-	Sprite menu;
+	Stage stage, menuStage;
+	Texture menuTexture, buttonSelectedTex, buttonNotSelectedTex, buttonStart, buttonStartOn;
+	Actor menu;
+	Image buttonvoiture1, buttonvoiture2;
+	Image buttonMotorEssence, buttonMotorTurbo;
+	Image buttonWheelBig, buttonWheelSmall, buttonWheelCaoutchouc;
+	Image buttonBigLight, buttonMiddleLight, buttonSmallLight;
+	Image start;
+
+	String lightSelection;
+	String wheelSelection;
+	String motorSelection;
+	String carSelection;
+
+	boolean menuOver;
 	@Override
 	public void create ()
 	{
-		menuTexture = new Texture(Gdx.files.internal("menu.png"));
-		menu = new Sprite(menuTexture);
-		menu.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		menuOver  = true;
+		stage     = new Stage();
+		menuStage = new Stage();
 
-		batch = new SpriteBatch();
+		menuTexture = new Texture(Gdx.files.internal("menu.png"));
+		buttonSelectedTex = new Texture(Gdx.files.internal("buttonSelect.png"));
+		buttonNotSelectedTex = new Texture(Gdx.files.internal("buttonNotSelect.png"));
+		buttonStart = new Texture(Gdx.files.internal("startButton.png"));
+		buttonStartOn = new Texture(Gdx.files.internal("startButton-on.png"));
+
+		voiture     = new Texture(Gdx.files.internal("voiture.png"));
+		voitureTurbo = new Texture(Gdx.files.internal("voitureTurbo.png"));
+		voitureS      = new Image(voiture);
+
+		menu = new Image(menuTexture);
+		menu.setPosition(Gdx.graphics.getWidth()/2 - menu.getWidth()/2, Gdx.graphics.getHeight()/2 - menu.getHeight()/2);
+
+		buttonvoiture1 = new Image(buttonSelectedTex);
+		buttonvoiture1.setSize(70,40);
+		buttonvoiture1.setPosition(menu.getX() + 180, menu.getY() + 690);
+
+		buttonvoiture1.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonvoiture1.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonvoiture2.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				voitureS.setDrawable(new SpriteDrawable(new Sprite(voiture)));
+			}
+		});
+
+		buttonvoiture2 = new Image(buttonNotSelectedTex);
+		buttonvoiture2.setSize(70,40);
+		buttonvoiture2.setPosition(menu.getX() + 580, menu.getY() + 690);
+
+		buttonvoiture2.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonvoiture2.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonvoiture1.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				voitureS.setDrawable(new SpriteDrawable(new Sprite(voitureTurbo)));
+			}
+		});
+
+
+		buttonMotorEssence = new Image(buttonSelectedTex);
+		buttonMotorEssence.setSize(70,40);
+		buttonMotorEssence.setPosition(menu.getX() + 95, menu.getY() + 430);
+
+		buttonMotorEssence.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonMotorEssence.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonMotorTurbo.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				motorSelection = "moteurEssence";
+			}
+		});
+
+		buttonMotorTurbo = new Image(buttonNotSelectedTex);
+		buttonMotorTurbo.setSize(70,40);
+		buttonMotorTurbo.setPosition(menu.getX() + 270, menu.getY() + 430);
+
+		buttonMotorTurbo.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonMotorTurbo.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonMotorEssence.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				motorSelection = "moteurTurbo";
+			}
+		});
+
+		buttonWheelBig = new Image(buttonSelectedTex);
+		buttonWheelBig.setSize(70,40);
+		buttonWheelBig.setPosition(menu.getX() + 465, menu.getY() + 430);
+
+		buttonWheelBig.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonWheelBig.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonWheelCaoutchouc.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				buttonWheelSmall.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				wheelSelection = "roueGrande";
+			}
+		});
+
+		buttonWheelSmall = new Image(buttonNotSelectedTex);
+		buttonWheelSmall.setSize(70,40);
+		buttonWheelSmall.setPosition(menu.getX() + 588, menu.getY() + 430);
+
+		buttonWheelSmall.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonWheelSmall.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonWheelCaoutchouc.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				buttonWheelBig.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				wheelSelection = "rouePetite";
+			}
+		});
+
+		buttonWheelCaoutchouc = new Image(buttonNotSelectedTex);
+		buttonWheelCaoutchouc.setSize(70,40);
+		buttonWheelCaoutchouc.setPosition(menu.getX() + 695, menu.getY() + 430);
+
+		buttonWheelCaoutchouc.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonWheelCaoutchouc.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonWheelSmall.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				buttonWheelBig.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				wheelSelection = "roueCaoutchouc";
+			}
+		});
+
+		buttonBigLight = new Image(buttonSelectedTex);
+		buttonBigLight.setSize(70,40);
+		buttonBigLight.setPosition(menu.getX() + 160, menu.getY() + 170);
+
+		buttonBigLight.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonBigLight.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonSmallLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				buttonMiddleLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				lightSelection = "grandLum";
+			}
+		});
+
+		buttonMiddleLight = new Image(buttonNotSelectedTex);
+		buttonMiddleLight.setSize(70,40);
+		buttonMiddleLight.setPosition(menu.getX() + 400, menu.getY() + 170);
+
+		buttonMiddleLight.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonMiddleLight.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonSmallLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				buttonBigLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				lightSelection = "moyenneLum";
+			}
+		});
+
+		buttonSmallLight = new Image(buttonNotSelectedTex);
+		buttonSmallLight.setSize(70,40);
+		buttonSmallLight.setPosition(menu.getX() + 600, menu.getY() + 170);
+
+		buttonSmallLight.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				buttonSmallLight.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
+				buttonMiddleLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				buttonBigLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
+				lightSelection = "petiteLum";
+			}
+		});
+
+		start = new Image(buttonStart);
+		start.setSize(416,89);
+		start.setPosition(menu.getX() + menu.getWidth()/2 - start.getWidth()/2, menu.getY() +20);
+		start.addListener(new ClickListener(){
+			public void clicked(InputEvent e, float x, float y) {
+				menuOver = false;
+			}
+		});
+		start.addListener(new InputListener() {
+
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+				start.setDrawable(new SpriteDrawable(new Sprite(buttonStartOn)));
+			}
+			public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+				start.setDrawable(new SpriteDrawable(new Sprite(buttonStart)));
+			}
+		});
+
 		background1 = new Texture(Gdx.files.internal("backgroundscroll_.png"));
 		background2 = new Texture(Gdx.files.internal("backgroundscrollBack.png"));
 		background3 = new Texture(Gdx.files.internal("backgroundscrollBack1.png"));
 		background4 = new Texture(Gdx.files.internal("backgroundscrollBack2.png"));
 		background5 = new Texture(Gdx.files.internal("backgroundscrollBack3.png"));
-		voiture     = new Texture(Gdx.files.internal("voiture.png"));
 		wheelTurbo  = new Texture(Gdx.files.internal("wheelTurbo.png"));
+
 		cloud1 = new Texture(Gdx.files.internal("cloud1.png"));
 		cloud2 = new Texture(Gdx.files.internal("cloud2.png"));
 		cloud3 = new Texture(Gdx.files.internal("cloud3.png"));
 		cloud4 = new Texture(Gdx.files.internal("cloud4.png"));
 
-		cloudS1 = new Sprite(cloud1);
-		cloudS2 = new Sprite(cloud2);
-		cloudS3 = new Sprite(cloud3);
-		cloudS4 = new Sprite(cloud4);
+		cloudS1 = new Image(cloud1);
+		cloudS2 = new Image(cloud2);
+		cloudS3 = new Image(cloud3);
+		cloudS4 = new Image(cloud4);
 
 		cloudS1.setY(700);
 		cloudS2.setY(650);
@@ -73,27 +246,27 @@ public class MyGdxGame extends ApplicationAdapter
 		rand3 = (int)( Math.random()*( 4 + 4 + 1 ) )  -4;
 		rand4 = (int)( Math.random()*( 4 + 4 + 1 ) )  -4;
 
-		backgroundSun = new Sprite(background5);
-		voitureS      = new Sprite(voiture);
+		backgroundSun = new Image(background5);
 
-		wheelTurboS1   = new Sprite(wheelTurbo);
-		wheelTurboS2   = new Sprite(wheelTurbo);
+
+		wheelTurboS1   = new Image(wheelTurbo);
+		wheelTurboS2   = new Image(wheelTurbo);
 		wheelTurboS1.setPosition(1020, 60);
 		wheelTurboS2.setPosition(1200, 60);
 
-		backgroundScroll1 = new Sprite(background1);
-		backgroundScroll2 = new Sprite(background1);
+		backgroundScroll1 = new Image(background1);
+		backgroundScroll2 = new Image(background1);
 
-		backgroundScrollBack1 = new Sprite(background2);
-		backgroundScrollBack2 = new Sprite(background2);
+		backgroundScrollBack1 = new Image(background2);
+		backgroundScrollBack2 = new Image(background2);
 
-		backgroundScrollBackBack1 = new Sprite(background3);
-		backgroundScrollBackBack2 = new Sprite(background3);
+		backgroundScrollBackBack1 = new Image(background3);
+		backgroundScrollBackBack2 = new Image(background3);
 
-		backgroundScrollBackBackBack1 = new Sprite(background4);
-		backgroundScrollBackBackBack2 = new Sprite(background4);
+		backgroundScrollBackBackBack1 = new Image(background4);
+		backgroundScrollBackBackBack2 = new Image(background4);
 
-		listClouds = new ArrayList<Sprite>();
+		listClouds = new ArrayList<Image>();
 	}
 
 	@Override
@@ -110,6 +283,9 @@ public class MyGdxGame extends ApplicationAdapter
 			scrollingTranslate1 -= 4;
 			scrollingTranslate2 -= 1;
 			scrollingTranslate3 -= 3;
+			wheelTurboS1.setOrigin(wheelTurboS1.getWidth()/2, wheelTurboS1.getHeight()/2);
+			wheelTurboS2.setOrigin(wheelTurboS2.getWidth()/2, wheelTurboS2.getHeight()/2);
+
 			wheelTurboS1.setRotation(wheelTurboS1.getRotation()-5);
 			wheelTurboS2.setRotation(wheelTurboS2.getRotation()-5);
 		}
@@ -136,39 +312,56 @@ public class MyGdxGame extends ApplicationAdapter
 
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
 
-		backgroundScrollBackBackBack1.draw(batch);
-		backgroundScrollBackBackBack2.draw(batch);
+		Gdx.input.setInputProcessor(stage);
 
-		backgroundSun.draw(batch);
+		stage.addActor(backgroundScrollBackBackBack1);
+		stage.addActor(backgroundScrollBackBackBack2);
 
-		backgroundScrollBack1.draw(batch);
-		backgroundScrollBack2.draw(batch);
+		stage.addActor(backgroundSun);
+		stage.addActor(backgroundScrollBack1);
+		stage.addActor(backgroundScrollBack2);
+		stage.addActor(backgroundScrollBackBack1);
+		stage.addActor(backgroundScrollBackBack2);
+		stage.addActor(backgroundScroll1);
+		stage.addActor(backgroundScroll2);
+		stage.addActor(cloudS1);
+		stage.addActor(cloudS2);
+		stage.addActor(cloudS3);
+		stage.addActor(cloudS4);
 
-		backgroundScrollBackBack1.draw(batch);
-		backgroundScrollBackBack2.draw(batch);
+		if(!menuOver) {
+			stage.addActor(voitureS);
+			stage.addActor(wheelTurboS1);
+			stage.addActor(wheelTurboS2);
+		}
+		stage.draw();
 
-		backgroundScroll1.draw(batch);
-		backgroundScroll2.draw(batch);
+		if(menuOver) {
+			Gdx.input.setInputProcessor(menuStage);
+			menuStage.act();
+			menuStage.addActor(menu);
+			menuStage.addActor(buttonvoiture1);
+			menuStage.addActor(buttonvoiture2);
 
-		voitureS.draw(batch);
-		wheelTurboS1.draw(batch);
-		wheelTurboS2.draw(batch);
+			menuStage.addActor(buttonMotorEssence);
+			menuStage.addActor(buttonMotorTurbo);
 
-		cloudS1.draw(batch);
-		cloudS2.draw(batch);
-		cloudS3.draw(batch);
-		cloudS4.draw(batch);
+			menuStage.addActor(buttonWheelBig);
+			menuStage.addActor(buttonWheelSmall);
+			menuStage.addActor(buttonWheelCaoutchouc);
 
-		menu.draw(batch);
-		batch.end();
+			menuStage.addActor(buttonBigLight);
+			menuStage.addActor(buttonMiddleLight);
+			menuStage.addActor(buttonSmallLight);
 
+			menuStage.addActor(start);
+			menuStage.draw();
+		}
 	}
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
 		background1.dispose();
 	}
 }
