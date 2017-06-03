@@ -36,22 +36,22 @@ public class MyGdxGame extends ApplicationAdapter
 	@Override
 	public void create ()
 	{
-		menuTexture = new Texture("./core/assets/menu.png");
+		menuTexture = new Texture(Gdx.files.internal("menu.png"));
 		menu = new Sprite(menuTexture);
 		menu.setCenter(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
 		batch = new SpriteBatch();
-		background1 = new Texture("./core/assets/backgroundScroll_.png");
-		background2 = new Texture("./core/assets/backgroundScrollBack.png");
-		background3 = new Texture("./core/assets/backgroundScrollBack1.png");
-		background4 = new Texture("./core/assets/backgroundScrollBack2.png");
-		background5 = new Texture("./core/assets/backgroundScrollBack3.png");
-		voiture     = new Texture("./core/assets/voiture.png");
-		wheelTurbo  = new Texture("./core/assets/wheelTurbo.png");
-		cloud1 = new Texture("./core/assets/cloud1.png");
-		cloud2 = new Texture("./core/assets/cloud2.png");
-		cloud3 = new Texture("./core/assets/cloud3.png");
-		cloud4 = new Texture("./core/assets/cloud4.png");
+		background1 = new Texture(Gdx.files.internal("backgroundscroll_.png"));
+		background2 = new Texture(Gdx.files.internal("backgroundscrollBack.png"));
+		background3 = new Texture(Gdx.files.internal("backgroundscrollBack1.png"));
+		background4 = new Texture(Gdx.files.internal("backgroundscrollBack2.png"));
+		background5 = new Texture(Gdx.files.internal("backgroundscrollBack3.png"));
+		voiture     = new Texture(Gdx.files.internal("voiture.png"));
+		wheelTurbo  = new Texture(Gdx.files.internal("wheelTurbo.png"));
+		cloud1 = new Texture(Gdx.files.internal("cloud1.png"));
+		cloud2 = new Texture(Gdx.files.internal("cloud2.png"));
+		cloud3 = new Texture(Gdx.files.internal("cloud3.png"));
+		cloud4 = new Texture(Gdx.files.internal("cloud4.png"));
 
 		cloudS1 = new Sprite(cloud1);
 		cloudS2 = new Sprite(cloud2);
