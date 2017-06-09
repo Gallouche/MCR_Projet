@@ -13,6 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.mygdx.game.moteur.Moteur;
+import com.mygdx.game.phare.Phare;
+import com.mygdx.game.roue.Roue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +51,16 @@ public class MyGdxGame extends ApplicationAdapter
 	String motorSelection;
 	String carSelection;
 
+	Moteur myMoteur;
+	Phare myPhare;
+	Roue myRoue;
+
 	boolean menuOver;
 	@Override
 	public void create ()
 	{
+
+
 		menuOver  = true;
 		stage     = new Stage();
 		menuStage = new Stage();
