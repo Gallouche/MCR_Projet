@@ -65,14 +65,14 @@ public class MyGdxGame extends ApplicationAdapter
 		stage     = new Stage();
 		menuStage = new Stage();
 
-		menuTexture = new Texture("./core/assets/menu.png");
-		buttonSelectedTex = new Texture("./core/assets/buttonSelect.png");
-		buttonNotSelectedTex = new Texture("./core/assets/buttonNotSelect.png");
-		buttonStart = new Texture("./core/assets/startButton.png");
-		buttonStartOn = new Texture("./core/assets/startButton-on.png");
+		menuTexture = new Texture(Gdx.files.internal("menu.png"));
+		buttonSelectedTex = new Texture(Gdx.files.internal("buttonSelect.png"));
+		buttonNotSelectedTex = new Texture(Gdx.files.internal("buttonNotSelect.png"));
+		buttonStart = new Texture(Gdx.files.internal("startButton.png"));
+		buttonStartOn = new Texture(Gdx.files.internal("startButton-on.png"));
 
-		voiture     = new Texture("./core/assets/voiture.png");
-		voitureTurbo = new Texture("./core/assets/voitureTurbo.png");
+		voiture     = new Texture(Gdx.files.internal("voiture.png"));
+		voitureTurbo = new Texture(Gdx.files.internal("voitureTurbo.png"));
 		voitureS      = new Image(voiture);
 
 		menu = new Image(menuTexture);
@@ -223,17 +223,17 @@ public class MyGdxGame extends ApplicationAdapter
 			}
 		});
 
-		background1 = new Texture("./core/assets/backgroundScroll_.png");
-		background2 = new Texture("./core/assets/backgroundScrollBack.png");
-		background3 = new Texture("./core/assets/backgroundScrollBack1.png");
-		background4 = new Texture("./core/assets/backgroundScrollBack2.png");
-		background5 = new Texture("./core/assets/backgroundScrollBack3.png");
-		wheelTurbo  = new Texture("./core/assets/wheelTurbo.png");
+		background1 = new Texture(Gdx.files.internal("backgroundscroll_.png"));
+		background2 = new Texture(Gdx.files.internal("backgroundscrollBack.png"));
+		background3 = new Texture(Gdx.files.internal("backgroundscrollBack1.png"));
+		background4 = new Texture(Gdx.files.internal("backgroundscrollBack2.png"));
+		background5 = new Texture(Gdx.files.internal("backgroundscrollBack3.png"));
+		wheelTurbo  = new Texture(Gdx.files.internal("wheelTurbo.png"));
 
-		cloud1 = new Texture("./core/assets/cloud1.png");
-		cloud2 = new Texture("./core/assets/cloud2.png");
-		cloud3 = new Texture("./core/assets/cloud3.png");
-		cloud4 = new Texture("./core/assets/cloud4.png");
+		cloud1 = new Texture(Gdx.files.internal("cloud1.png"));
+		cloud2 = new Texture(Gdx.files.internal("cloud2.png"));
+		cloud3 = new Texture(Gdx.files.internal("cloud3.png"));
+		cloud4 = new Texture(Gdx.files.internal("cloud4.png"));
 
 		cloudS1 = new Image(cloud1);
 		cloudS2 = new Image(cloud2);
