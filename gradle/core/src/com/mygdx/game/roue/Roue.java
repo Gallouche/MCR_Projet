@@ -5,6 +5,7 @@
  */
 package com.mygdx.game.roue;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.obstacle.Obstacle;
 
 /**
@@ -41,4 +42,7 @@ public interface Roue {
      * @return la solidité de la roue.
      */
     public int getSolidite();
+
+    public Texture getTexture();
+
 }

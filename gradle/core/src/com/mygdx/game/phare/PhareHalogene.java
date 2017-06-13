@@ -1,10 +1,13 @@
 package com.mygdx.game.phare;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  * Created by gallouche on 26/05/17.
  */
 public class PhareHalogene implements Phare {
-    private final int DISTANCEECLAIRAGE = 250;
+    private final int DISTANCEECLAIRAGE = 500;
     private final int CONSOMATION = 5;
     private int energie;
     private boolean allume;
@@ -41,5 +44,10 @@ public class PhareHalogene implements Phare {
         else{
             return CONSOMATION;
         }
+    }
+
+    @Override
+    public Texture getTexture() {
+        return new Texture(Gdx.files.internal("core/assets/littleLights.png"));
     }
 }

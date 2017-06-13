@@ -5,6 +5,8 @@
  */
 package com.mygdx.game.phare;
 
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  * Interface Phare. Le comportement de cette interface représente 
  * un phare étant alimenté par une certaine quantité d'énergie 
@@ -44,4 +46,6 @@ public interface Phare {
      * @return la consommation d'énergie 
      */
     public int getConsommation();
+
+    public Texture getTexture();
 }

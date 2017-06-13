@@ -14,8 +14,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.mygdx.game.moteur.Moteur;
+import com.mygdx.game.moteur.MoteurEssence;
+import com.mygdx.game.moteur.MoteurTurbo;
 import com.mygdx.game.phare.Phare;
+import com.mygdx.game.phare.PhareHalogene;
+import com.mygdx.game.phare.PhareLED;
+import com.mygdx.game.phare.PhareXenon;
 import com.mygdx.game.roue.Roue;
+import com.mygdx.game.roue.RoueCaoutchouc;
+import com.mygdx.game.roue.RoueFragile;
+import com.mygdx.game.roue.RoueRenforcee;
+import com.mygdx.game.vehicule.Vehicule;
+import com.mygdx.game.vehicule.VehiculeNormal;
+import com.mygdx.game.vehicule.VehiculeTurbo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +39,7 @@ public class MyGdxGame extends ApplicationAdapter
 	Image backgroundScroll1, backgroundScroll2, backgroundScrollBack1, backgroundScrollBack2,
 			backgroundScrollBackBack1, backgroundScrollBackBack2,
 			backgroundScrollBackBackBack1, backgroundScrollBackBackBack2, backgroundSun, voitureS, wheelTurboS1, wheelTurboS2,
-			cloudS1, cloudS2, cloudS3, cloudS4;
+			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche;
 	List<Image> listClouds;
 
 	int scrollingTranslate1 = 0;
@@ -46,34 +57,38 @@ public class MyGdxGame extends ApplicationAdapter
 	Image buttonBigLight, buttonMiddleLight, buttonSmallLight;
 	Image start;
 
-	String lightSelection;
-	String wheelSelection;
-	String motorSelection;
 	String carSelection;
 
 	Moteur myMoteur;
 	Phare myPhare;
 	Roue myRoue;
+	Vehicule myVehicule;
+
 
 	boolean menuOver;
+	boolean cloud1MovingRight, cloud2MovingRight, cloud3MovingRight, cloud4MovingRight;
 	@Override
 	public void create ()
 	{
-
+		myMoteur = new MoteurEssence();
+		myRoue = new RoueRenforcee();
+		myPhare = new PhareXenon();
+		carSelection = "vehiculeNormal";
 
 		menuOver  = true;
 		stage     = new Stage();
 		menuStage = new Stage();
 
-		menuTexture = new Texture(Gdx.files.internal("menu.png"));
-		buttonSelectedTex = new Texture(Gdx.files.internal("buttonSelect.png"));
-		buttonNotSelectedTex = new Texture(Gdx.files.internal("buttonNotSelect.png"));
-		buttonStart = new Texture(Gdx.files.internal("startButton.png"));
-		buttonStartOn = new Texture(Gdx.files.internal("startButton-on.png"));
+		menuTexture = new Texture(Gdx.files.internal("core/assets/menu.png"));
+		buttonSelectedTex = new Texture(Gdx.files.internal("core/assets/buttonSelect.png"));
+		buttonNotSelectedTex = new Texture(Gdx.files.internal("core/assets/buttonNotSelect.png"));
+		buttonStart = new Texture(Gdx.files.internal("core/assets/startButton.png"));
+		buttonStartOn = new Texture(Gdx.files.internal("core/assets/startButton-on.png"));
 
-		voiture     = new Texture(Gdx.files.internal("voiture.png"));
-		voitureTurbo = new Texture(Gdx.files.internal("voitureTurbo.png"));
-		voitureS      = new Image(voiture);
+		voiture     = new Texture(Gdx.files.internal("core/assets/voiture.png"));
+		voitureTurbo = new Texture(Gdx.files.internal("core/assets/voitureTurbo.png"));
+
+
 
 		menu = new Image(menuTexture);
 		menu.setPosition(Gdx.graphics.getWidth()/2 - menu.getWidth()/2, Gdx.graphics.getHeight()/2 - menu.getHeight()/2);
@@ -86,7 +101,7 @@ public class MyGdxGame extends ApplicationAdapter
 			public void clicked(InputEvent e, float x, float y) {
 				buttonvoiture1.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonvoiture2.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				voitureS.setDrawable(new SpriteDrawable(new Sprite(voiture)));
+				carSelection = "vehiculeNormal";
 			}
 		});
 
@@ -98,7 +113,7 @@ public class MyGdxGame extends ApplicationAdapter
 			public void clicked(InputEvent e, float x, float y) {
 				buttonvoiture2.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonvoiture1.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				voitureS.setDrawable(new SpriteDrawable(new Sprite(voitureTurbo)));
+				carSelection = "vehiculeTurbo";
 			}
 		});
 
@@ -111,7 +126,7 @@ public class MyGdxGame extends ApplicationAdapter
 			public void clicked(InputEvent e, float x, float y) {
 				buttonMotorEssence.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonMotorTurbo.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				motorSelection = "moteurEssence";
+				myMoteur = new MoteurEssence();
 			}
 		});
 
@@ -123,7 +138,7 @@ public class MyGdxGame extends ApplicationAdapter
 			public void clicked(InputEvent e, float x, float y) {
 				buttonMotorTurbo.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonMotorEssence.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				motorSelection = "moteurTurbo";
+				myMoteur = new MoteurTurbo();
 			}
 		});
 
@@ -136,7 +151,7 @@ public class MyGdxGame extends ApplicationAdapter
 				buttonWheelBig.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonWheelCaoutchouc.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
 				buttonWheelSmall.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				wheelSelection = "roueGrande";
+				myRoue = new RoueRenforcee();
 			}
 		});
 
@@ -149,7 +164,7 @@ public class MyGdxGame extends ApplicationAdapter
 				buttonWheelSmall.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonWheelCaoutchouc.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
 				buttonWheelBig.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				wheelSelection = "rouePetite";
+				myRoue = new RoueCaoutchouc();
 			}
 		});
 
@@ -162,7 +177,7 @@ public class MyGdxGame extends ApplicationAdapter
 				buttonWheelCaoutchouc.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonWheelSmall.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
 				buttonWheelBig.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				wheelSelection = "roueCaoutchouc";
+				myRoue = new RoueFragile();
 			}
 		});
 
@@ -175,7 +190,7 @@ public class MyGdxGame extends ApplicationAdapter
 				buttonBigLight.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonSmallLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
 				buttonMiddleLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				lightSelection = "grandLum";
+				myPhare = new PhareXenon();
 			}
 		});
 
@@ -188,7 +203,7 @@ public class MyGdxGame extends ApplicationAdapter
 				buttonMiddleLight.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonSmallLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
 				buttonBigLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				lightSelection = "moyenneLum";
+				myPhare = new PhareLED();
 			}
 		});
 
@@ -201,7 +216,7 @@ public class MyGdxGame extends ApplicationAdapter
 				buttonSmallLight.setDrawable(new SpriteDrawable(new Sprite(buttonSelectedTex)));
 				buttonMiddleLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
 				buttonBigLight.setDrawable(new SpriteDrawable(new Sprite(buttonNotSelectedTex)));
-				lightSelection = "petiteLum";
+				myPhare = new PhareHalogene();
 			}
 		});
 
@@ -210,6 +225,19 @@ public class MyGdxGame extends ApplicationAdapter
 		start.setPosition(menu.getX() + menu.getWidth()/2 - start.getWidth()/2, menu.getY() +20);
 		start.addListener(new ClickListener(){
 			public void clicked(InputEvent e, float x, float y) {
+				if(carSelection.equals("vehiculeNormal"))
+				{
+					myVehicule = new VehiculeNormal(myRoue, myPhare, myMoteur);
+				}
+				else if(carSelection.equals("vehiculeTurbo"))
+				{
+					myVehicule = new VehiculeTurbo(myRoue,myPhare,myMoteur);
+				}
+
+				voitureS = new Image(myVehicule.getTexture());
+				roueAffichee1 = new Image((myVehicule.getRoue().getTexture()));
+				roueAffichee2 = new Image((myVehicule.getRoue().getTexture()));
+				phareAffiche = new Image(myVehicule.getPhare().getTexture());
 				menuOver = false;
 			}
 		});
@@ -223,17 +251,17 @@ public class MyGdxGame extends ApplicationAdapter
 			}
 		});
 
-		background1 = new Texture(Gdx.files.internal("backgroundscroll_.png"));
-		background2 = new Texture(Gdx.files.internal("backgroundscrollBack.png"));
-		background3 = new Texture(Gdx.files.internal("backgroundscrollBack1.png"));
-		background4 = new Texture(Gdx.files.internal("backgroundscrollBack2.png"));
-		background5 = new Texture(Gdx.files.internal("backgroundscrollBack3.png"));
-		wheelTurbo  = new Texture(Gdx.files.internal("wheelTurbo.png"));
+		background1 = new Texture(Gdx.files.internal("core/assets/backgroundscroll_.png"));
+		background2 = new Texture(Gdx.files.internal("core/assets/backgroundscrollBack.png"));
+		background3 = new Texture(Gdx.files.internal("core/assets/backgroundscrollBack1.png"));
+		background4 = new Texture(Gdx.files.internal("core/assets/backgroundscrollBack2.png"));
+		background5 = new Texture(Gdx.files.internal("core/assets/backgroundscrollBack3.png"));
+		wheelTurbo  = new Texture(Gdx.files.internal("core/assets/wheelTurbo.png"));
 
-		cloud1 = new Texture(Gdx.files.internal("cloud1.png"));
-		cloud2 = new Texture(Gdx.files.internal("cloud2.png"));
-		cloud3 = new Texture(Gdx.files.internal("cloud3.png"));
-		cloud4 = new Texture(Gdx.files.internal("cloud4.png"));
+		cloud1 = new Texture(Gdx.files.internal("core/assets/cloud1.png"));
+		cloud2 = new Texture(Gdx.files.internal("core/assets/cloud2.png"));
+		cloud3 = new Texture(Gdx.files.internal("core/assets/cloud3.png"));
+		cloud4 = new Texture(Gdx.files.internal("core/assets/cloud4.png"));
 
 		cloudS1 = new Image(cloud1);
 		cloudS2 = new Image(cloud2);
@@ -251,9 +279,17 @@ public class MyGdxGame extends ApplicationAdapter
 		cloudS4.setX(1900);
 
 		rand1 = (int)( Math.random()*( 4 + 4 + 1 ) )  -4;
+		if(rand1 < 0)
+			cloud1MovingRight = false;
 		rand2 = (int)( Math.random()*( 4 + 4 + 1 ) )  -4;
+		if(rand2 < 0)
+			cloud2MovingRight = false;
 		rand3 = (int)( Math.random()*( 4 + 4 + 1 ) )  -4;
+		if(rand3 < 0)
+			cloud3MovingRight = false;
 		rand4 = (int)( Math.random()*( 4 + 4 + 1 ) )  -4;
+		if(rand4 < 0)
+			cloud4MovingRight = false;
 
 		backgroundSun = new Image(background5);
 
@@ -281,31 +317,55 @@ public class MyGdxGame extends ApplicationAdapter
 	@Override
 	public void render ()
 	{
-
-		cloudS1.setX(cloudS1.getX()+ rand1);
-		cloudS2.setX(cloudS2.getX()+ rand2);
-		cloudS3.setX(cloudS3.getX()+ rand3);
-		cloudS4.setX(cloudS4.getX()+ rand4);
-
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+		if(cloud1MovingRight &&cloudS1.getX() > stage.getWidth())
 		{
-			scrollingTranslate1 -= 4;
-			scrollingTranslate2 -= 1;
-			scrollingTranslate3 -= 3;
-			wheelTurboS1.setOrigin(wheelTurboS1.getWidth()/2, wheelTurboS1.getHeight()/2);
-			wheelTurboS2.setOrigin(wheelTurboS2.getWidth()/2, wheelTurboS2.getHeight()/2);
-
-			wheelTurboS1.setRotation(wheelTurboS1.getRotation()-5);
-			wheelTurboS2.setRotation(wheelTurboS2.getRotation()-5);
+			rand1 = rand1 * (-1);
+			cloud1MovingRight = false;
 		}
-		if(-scrollingTranslate1 > background1.getWidth())
-			scrollingTranslate1 = 0;
-		if(-scrollingTranslate2 > background2.getWidth())
-			scrollingTranslate2 = 0;
-		if(-scrollingTranslate3 > background3.getWidth())
-			scrollingTranslate3 = 0;
-		if(-scrollingTranslate4 > background4.getWidth())
-			scrollingTranslate4 = 0;
+		else if(!cloud1MovingRight && cloudS1.getX()+cloudS1.getWidth() < 0)
+		{
+			rand1 = rand1 * (-1);
+			cloud1MovingRight = true;
+		}
+		cloudS1.setX(cloudS1.getX()+ rand1);
+
+		if(cloud2MovingRight &&cloudS2.getX() > stage.getWidth())
+		{
+			rand2 = rand2 * (-1);
+			cloud2MovingRight = false;
+		}
+		else if(!cloud2MovingRight && cloudS2.getX()+cloudS2.getWidth() < 0)
+		{
+			rand2 = rand2 * (-1);
+			cloud2MovingRight = true;
+
+		}
+		cloudS2.setX(cloudS2.getX()+ rand2);
+
+		if(cloud3MovingRight &&cloudS3.getX() > stage.getWidth())
+		{
+			rand3 = rand3 * (-1);
+			cloud3MovingRight = false;
+		}
+		else if(!cloud3MovingRight && cloudS3.getX()+cloudS3.getWidth() < 0)
+		{
+			rand3 = rand3 * (-1);
+			cloud3MovingRight = true;
+		}
+		cloudS3.setX(cloudS3.getX()+ rand3);
+
+		if(cloud4MovingRight &&cloudS4.getX() > stage.getWidth())
+		{
+			rand4 = rand4 * (-1);
+			cloud4MovingRight = false;
+		}
+		else if(!cloud4MovingRight && cloudS4.getX()+cloudS4.getWidth() < 0)
+		{
+			rand4 = rand4 * (-1);
+			cloud4MovingRight = true;
+
+		}
+		cloudS4.setX(cloudS4.getX()+ rand4);
 
 		backgroundScroll1.setX(scrollingTranslate1);
 		backgroundScroll2.setX(scrollingTranslate1 + background1.getWidth());
@@ -326,7 +386,7 @@ public class MyGdxGame extends ApplicationAdapter
 
 		stage.addActor(backgroundScrollBackBackBack1);
 		stage.addActor(backgroundScrollBackBackBack2);
-
+		backgroundSun.setPosition(stage.getWidth() - 300, stage.getHeight()-300);
 		stage.addActor(backgroundSun);
 		stage.addActor(backgroundScrollBack1);
 		stage.addActor(backgroundScrollBack2);
@@ -339,10 +399,52 @@ public class MyGdxGame extends ApplicationAdapter
 		stage.addActor(cloudS3);
 		stage.addActor(cloudS4);
 
-		if(!menuOver) {
+		if(!menuOver)
+		{
+			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			{
+				double vitesse =myVehicule.getMoteur().getPuissance()/100.0;
+				System.out.println(vitesse);
+				scrollingTranslate1 -= 4 * vitesse;
+				scrollingTranslate2 -= 1 * vitesse;
+				scrollingTranslate3 -= 3 * vitesse;
+
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
+			{
+				myVehicule.getMoteur().eteindre();
+			}
+			if(Gdx.input.isKeyPressed(Input.Keys.UP))
+			{
+				myVehicule.getMoteur().demarrer();
+			}
+			if(-scrollingTranslate1 > background1.getWidth())
+				scrollingTranslate1 = 0;
+			if(-scrollingTranslate2 > background2.getWidth())
+				scrollingTranslate2 = 0;
+			if(-scrollingTranslate3 > background3.getWidth())
+				scrollingTranslate3 = 0;
+			if(-scrollingTranslate4 > background4.getWidth())
+				scrollingTranslate4 = 0;
+
+
+			phareAffiche.setPosition(stage.getWidth()+300 - myVehicule.getPhare().getDistanceEclairage(), myVehicule.getRoue().getHauteur()+20);
+			stage.addActor(phareAffiche);
+			voitureS.setPosition(stage.getWidth() - myVehicule.getPhare().getDistanceEclairage(), myVehicule.getRoue().getHauteur());
 			stage.addActor(voitureS);
-			stage.addActor(wheelTurboS1);
-			stage.addActor(wheelTurboS2);
+
+			roueAffichee1.setPosition(stage.getWidth()+60- myVehicule.getPhare().getDistanceEclairage(),20);
+			stage.addActor(roueAffichee1);
+			roueAffichee2.setPosition(stage.getWidth()+235- myVehicule.getPhare().getDistanceEclairage(), 20);
+			stage.addActor(roueAffichee2);
+
+			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+				roueAffichee1.setOrigin(roueAffichee1.getWidth()/2, roueAffichee1.getHeight()/2);
+				roueAffichee2.setOrigin(roueAffichee2.getWidth()/2, roueAffichee2.getHeight()/2);
+
+				roueAffichee1.setRotation(roueAffichee1.getRotation() - 5);
+				roueAffichee2.setRotation(roueAffichee2.getRotation() - 5);
+			}
 		}
 		stage.draw();
 

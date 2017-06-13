@@ -1,10 +1,13 @@
 package com.mygdx.game.phare;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 /**
  * Created by gallouche on 26/05/17.
  */
 public class PhareLED implements Phare {
-    private final int DISTANCEECLAIRAGE = 300;
+    private final int DISTANCEECLAIRAGE = 1300;
     private final int CONSOMATION = 8;
     private int energie;
     private boolean allume;
@@ -41,5 +44,10 @@ public class PhareLED implements Phare {
         else{
             return CONSOMATION;
         }
+    }
+
+    @Override
+    public Texture getTexture() {
+        return new Texture(Gdx.files.internal("core/assets/middleLights.png"));
     }
 }

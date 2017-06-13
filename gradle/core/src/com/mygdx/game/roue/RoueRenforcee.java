@@ -1,5 +1,7 @@
 package com.mygdx.game.roue;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.obstacle.Obstacle;
 
 /**
@@ -18,7 +20,7 @@ public class RoueRenforcee implements Roue {
    public RoueRenforcee() {
       this.solidite = 100;
       this.coeff = 0.7;
-      this.hauteurCm = 120;
+      this.hauteurCm = 65;
    }
 
    /**
@@ -73,5 +75,10 @@ public class RoueRenforcee implements Roue {
    @Override
    public int getSolidite() {
       return solidite;
+   }
+
+   @Override
+   public Texture getTexture() {
+      return new Texture(Gdx.files.internal("core/assets/roueRenforcee.png"));
    }
 }

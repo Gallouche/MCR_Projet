@@ -18,7 +18,7 @@ public class MoteurEssence implements Moteur {
     // Temps auquel le moteur commence à surhcauffer
    private long tempsSurchauffe;
    // Durée nécessaire pour refroidir le moteur
-   public static final int DUREE_REFROIDISSEMENT = 1000; // ms
+   public static final int DUREE_REFROIDISSEMENT = 3000; // ms
    
    /**
     * Constructeur
@@ -34,8 +34,12 @@ public class MoteurEssence implements Moteur {
     */
    @Override
    public void demarrer() {
-      allume = true;
-      temperature = TEMPERATURE_ALLUMAGE;
+      if(!estAllume())
+      {
+
+         allume = true;
+         temperature = TEMPERATURE_ALLUMAGE;
+      }
    }
    
    /**
@@ -49,7 +53,7 @@ public class MoteurEssence implements Moteur {
 
    /**
     * Récupérer la puissance du moteur. Si la température >= à la température 
-    * maximum, le moteur donne 50% de la puissance de départ. Si le moteur
+    * maximum, le moteur donne 10% de la puissance de départ. Si le moteur
     * est éteint, la puissance est de 0.
     * @return la puissance.
     */
@@ -70,7 +74,7 @@ public class MoteurEssence implements Moteur {
             if ((tempsCourant - tempsSurchauffe) >= DUREE_REFROIDISSEMENT) {
                temperature = TEMPERATURE_ALLUMAGE;
             }
-            return (int)(puissance * 0.5);
+            return (int)(puissance * 0.2);
          }
       }
    }

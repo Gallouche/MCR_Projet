@@ -1,5 +1,7 @@
 package com.mygdx.game.roue;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.obstacle.Obstacle;
 
 /**
@@ -20,7 +22,7 @@ public class RoueFragile implements Roue {
    public RoueFragile() {
       this.solidite = 100;
       this.coeff = 0.2;
-      this.hauteurCm = 60;
+      this.hauteurCm = 30;
    }
 
    /**
@@ -77,4 +79,11 @@ public class RoueFragile implements Roue {
    public int getSolidite() {
       return solidite;
    }
+
+   @Override
+   public Texture getTexture() {
+      return new Texture(Gdx.files.internal("core/assets/roueFragile.png"));
+   }
+
+
 }

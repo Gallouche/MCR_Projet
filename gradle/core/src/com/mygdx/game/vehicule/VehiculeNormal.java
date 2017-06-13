@@ -15,21 +15,21 @@ import com.mygdx.game.roue.Roue;
  *
  * @author mathieu
  */
-public class VehiculeTurbo implements Vehicule
-{
-    private Roue   roue;
-    private Phare  phare;
+public class VehiculeNormal implements Vehicule{
+    private Roue roue;
+    private Phare phare;
     private Moteur moteur;
 
-    public VehiculeTurbo(Roue r, Phare p, Moteur m)
+    public VehiculeNormal(Roue r, Phare p, Moteur m)
     {
         roue   = r;
         phare  = p;
         moteur = m;
     }
-    public Texture getTexture()
-    {
-        return new Texture(Gdx.files.internal("core/assets/voitureTurbo.png"));
+
+    @Override
+    public Texture getTexture() {
+        return new Texture(Gdx.files.internal("core/assets/voitureNormale.png"));
     }
     @Override
     public Roue getRoue(){

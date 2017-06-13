@@ -5,10 +5,15 @@
  */
 package com.mygdx.game.vehicule;
 
-/**
- *
- * @author mathieu
- */
-public class Vehicule {
-    
+import com.badlogic.gdx.graphics.Texture;
+import com.mygdx.game.moteur.Moteur;
+import com.mygdx.game.phare.Phare;
+import com.mygdx.game.roue.Roue;
+
+public interface Vehicule {
+
+    public Texture getTexture();
+    public Roue getRoue();
+    public Moteur getMoteur();
+    public Phare getPhare();
 }
