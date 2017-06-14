@@ -29,7 +29,7 @@ public class VehiculeNormal implements Vehicule{
 
     @Override
     public Texture getTexture() {
-        return new Texture(Gdx.files.internal("core/assets/voitureNormale.png"));
+        return new Texture(Gdx.files.internal("voitureNormale.png"));
     }
     @Override
     public Roue getRoue(){

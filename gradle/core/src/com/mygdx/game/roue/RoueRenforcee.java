@@ -69,6 +69,6 @@ public class RoueRenforcee implements Roue {
 
    @Override
    public Texture getTexture() {
-      return new Texture(Gdx.files.internal("core/assets/roueRenforcee.png"));
+      return new Texture(Gdx.files.internal("roueRenforcee.png"));
    }
 }

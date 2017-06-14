@@ -72,7 +72,7 @@ public class RoueFragile implements Roue {
 
    @Override
    public Texture getTexture() {
-      return new Texture(Gdx.files.internal("core/assets/roueFragile.png"));
+      return new Texture(Gdx.files.internal("roueFragile.png"));
    }
 
 

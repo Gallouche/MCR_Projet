@@ -70,6 +70,6 @@ public class RoueCaoutchouc implements Roue {
    }
 
    public Texture getTexture(){
-      return new Texture(Gdx.files.internal("core/assets/roueCaoutchoucGrand.png"));
+      return new Texture(Gdx.files.internal("roueCaoutchoucGrand.png"));
    }
 }

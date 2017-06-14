@@ -51,6 +51,6 @@ public class PhareXenon implements Phare {
     }
     @Override
     public Texture getTexture() {
-        return new Texture(Gdx.files.internal("core/assets/bigLights.png"));
+        return new Texture(Gdx.files.internal("bigLights.png"));
     }
 }

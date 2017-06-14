@@ -29,7 +29,7 @@ public class VehiculeTurbo implements Vehicule
     }
     public Texture getTexture()
     {
-        return new Texture(Gdx.files.internal("core/assets/voitureTurbo.png"));
+        return new Texture(Gdx.files.internal("voitureTurbo.png"));
     }
     @Override
     public Roue getRoue(){

@@ -83,10 +83,10 @@ public class MyGdxGame extends ApplicationAdapter
 		distance = 0;
 		lifeDown = false;
 		timeUp = false;
-		sous_timer = new Image(new Texture(Gdx.files.internal("core/assets/sous_timer.png")));
-		timer = new Image(new Texture(Gdx.files.internal("core/assets/timer.png")));
-		sous_life = new Image(new Texture(Gdx.files.internal("core/assets/sous_timer.png")));
-		life = new Image(new Texture(Gdx.files.internal("core/assets/life.png")));
+		sous_timer = new Image(new Texture(Gdx.files.internal("sous_timer.png")));
+		timer = new Image(new Texture(Gdx.files.internal("timer.png")));
+		sous_life = new Image(new Texture(Gdx.files.internal("sous_timer.png")));
+		life = new Image(new Texture(Gdx.files.internal("life.png")));
 		obstacles = new ArrayList<Image>();
 		lumOn = false;
 		myMoteur = new MoteurEssence();
@@ -98,14 +98,14 @@ public class MyGdxGame extends ApplicationAdapter
 		stage     = new Stage();
 		menuStage = new Stage();
 
-		menuTexture = new Texture(Gdx.files.internal("core/assets/menu.png"));
-		buttonSelectedTex = new Texture(Gdx.files.internal("core/assets/buttonSelect.png"));
-		buttonNotSelectedTex = new Texture(Gdx.files.internal("core/assets/buttonNotSelect.png"));
-		buttonStart = new Texture(Gdx.files.internal("core/assets/startButton.png"));
-		buttonStartOn = new Texture(Gdx.files.internal("core/assets/startButton-on.png"));
-		obstacleCasse = new Image(new Texture(Gdx.files.internal("core/assets/rockBroken.png")));
+		menuTexture = new Texture(Gdx.files.internal("menu.png"));
+		buttonSelectedTex = new Texture(Gdx.files.internal("buttonSelect.png"));
+		buttonNotSelectedTex = new Texture(Gdx.files.internal("buttonNotSelect.png"));
+		buttonStart = new Texture(Gdx.files.internal("startButton.png"));
+		buttonStartOn = new Texture(Gdx.files.internal("startButton-on.png"));
+		obstacleCasse = new Image(new Texture(Gdx.files.internal("rockBroken.png")));
 
-		lumiere = new Texture(Gdx.files.internal("core/assets/lumiereOn.png"));
+		lumiere = new Texture(Gdx.files.internal("lumiereOn.png"));
 		lumiereImg = new Image(lumiere);
 
 		menu = new Image(menuTexture);
@@ -271,17 +271,17 @@ public class MyGdxGame extends ApplicationAdapter
 			}
 		});
 
-		background1 = new Texture(Gdx.files.internal("core/assets/backgroundscroll_.png"));
-		background2 = new Texture(Gdx.files.internal("core/assets/backgroundscrollBack.png"));
-		background3 = new Texture(Gdx.files.internal("core/assets/backgroundscrollBack1.png"));
-		background4 = new Texture(Gdx.files.internal("core/assets/backgroundscrollBack2.png"));
-		background5 = new Texture(Gdx.files.internal("core/assets/backgroundscrollBack3.png"));
-		wheelTurbo  = new Texture(Gdx.files.internal("core/assets/wheelTurbo.png"));
+		background1 = new Texture(Gdx.files.internal("backgroundscroll_.png"));
+		background2 = new Texture(Gdx.files.internal("backgroundscrollBack.png"));
+		background3 = new Texture(Gdx.files.internal("backgroundscrollBack1.png"));
+		background4 = new Texture(Gdx.files.internal("backgroundscrollBack2.png"));
+		background5 = new Texture(Gdx.files.internal("backgroundscrollBack3.png"));
+		wheelTurbo  = new Texture(Gdx.files.internal("wheelTurbo.png"));
 
-		cloud1 = new Texture(Gdx.files.internal("core/assets/cloud1.png"));
-		cloud2 = new Texture(Gdx.files.internal("core/assets/cloud2.png"));
-		cloud3 = new Texture(Gdx.files.internal("core/assets/cloud3.png"));
-		cloud4 = new Texture(Gdx.files.internal("core/assets/cloud4.png"));
+		cloud1 = new Texture(Gdx.files.internal("cloud1.png"));
+		cloud2 = new Texture(Gdx.files.internal("cloud2.png"));
+		cloud3 = new Texture(Gdx.files.internal("cloud3.png"));
+		cloud4 = new Texture(Gdx.files.internal("cloud4.png"));
 
 		cloudS1 = new Image(cloud1);
 		cloudS2 = new Image(cloud2);
@@ -340,7 +340,7 @@ public class MyGdxGame extends ApplicationAdapter
 		//temps fini
 		if(timeUp || lifeDown)
 		{
-			Image scores = new Image(new Texture(Gdx.files.internal("core/assets/scores.png")));
+			Image scores = new Image(new Texture(Gdx.files.internal("scores.png")));
 			scores.setWidth(stage.getWidth());
 			scores.setHeight(stage.getHeight());
 			stage.addActor(scores);
@@ -487,7 +487,7 @@ public class MyGdxGame extends ApplicationAdapter
 					}
 					if(obstacles.get(i).getX() < voitureS.getX()+voitureS.getWidth() && obstacles.get(i).getX() > voitureS.getX()+voitureS.getWidth()-100 && Gdx.input.isKeyPressed(Input.Keys.RIGHT))
 					{
-						obstacles.get(i).setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("core/assets/rockBroken.png")))));
+						obstacles.get(i).setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("rockBroken.png")))));
 						obstacles.get(i).setHeight(400);
 						obstacles.get(i).setWidth(400);
 					}
