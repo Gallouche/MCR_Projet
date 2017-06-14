@@ -47,5 +47,6 @@ public interface Phare {
      */
     public int getConsommation();
 
+    public boolean isAllume();
     public Texture getTexture();
 }

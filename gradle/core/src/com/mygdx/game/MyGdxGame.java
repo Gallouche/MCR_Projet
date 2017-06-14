@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.mygdx.game.moteur.Moteur;
 import com.mygdx.game.moteur.MoteurEssence;
 import com.mygdx.game.moteur.MoteurTurbo;
+import com.mygdx.game.obstacle.Obstacle;
 import com.mygdx.game.phare.Phare;
 import com.mygdx.game.phare.PhareHalogene;
 import com.mygdx.game.phare.PhareLED;
@@ -30,18 +31,19 @@ import com.mygdx.game.vehicule.VehiculeTurbo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MyGdxGame extends ApplicationAdapter
 {
 	Texture background1, background2, background3, background4, background5, voiture, voitureTurbo,
-			wheelTurbo, cloud1, cloud2, cloud3, cloud4;
+			wheelTurbo, cloud1, cloud2, cloud3, cloud4, lumiere;
 
 	Image backgroundScroll1, backgroundScroll2, backgroundScrollBack1, backgroundScrollBack2,
 			backgroundScrollBackBack1, backgroundScrollBackBack2,
 			backgroundScrollBackBackBack1, backgroundScrollBackBackBack2, backgroundSun, voitureS, wheelTurboS1, wheelTurboS2,
-			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche;
+			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche, lumiereImg;
 	List<Image> listClouds;
-
+	List<Image> obstacles;
 	int scrollingTranslate1 = 0;
 	int scrollingTranslate2 = 0;
 	int scrollingTranslate3 = 0;
@@ -67,9 +69,12 @@ public class MyGdxGame extends ApplicationAdapter
 
 	boolean menuOver;
 	boolean cloud1MovingRight, cloud2MovingRight, cloud3MovingRight, cloud4MovingRight;
+	boolean lumOn;
 	@Override
 	public void create ()
 	{
+		obstacles = new ArrayList<Image>();
+		lumOn = false;
 		myMoteur = new MoteurEssence();
 		myRoue = new RoueRenforcee();
 		myPhare = new PhareXenon();
@@ -85,10 +90,8 @@ public class MyGdxGame extends ApplicationAdapter
 		buttonStart = new Texture(Gdx.files.internal("core/assets/startButton.png"));
 		buttonStartOn = new Texture(Gdx.files.internal("core/assets/startButton-on.png"));
 
-		voiture     = new Texture(Gdx.files.internal("core/assets/voiture.png"));
-		voitureTurbo = new Texture(Gdx.files.internal("core/assets/voitureTurbo.png"));
-
-
+		lumiere = new Texture(Gdx.files.internal("core/assets/lumiereOn.png"));
+		lumiereImg = new Image(lumiere);
 
 		menu = new Image(menuTexture);
 		menu.setPosition(Gdx.graphics.getWidth()/2 - menu.getWidth()/2, Gdx.graphics.getHeight()/2 - menu.getHeight()/2);
@@ -401,14 +404,27 @@ public class MyGdxGame extends ApplicationAdapter
 
 		if(!menuOver)
 		{
+			Random random = new Random();
+			int currRand = random.nextInt(1000);
+			if(currRand < 10)
+			{
+				Obstacle obstacle = new Obstacle();
+				Image currObstacle = new Image(obstacle.getTexture());
+				currObstacle.setPosition(stage.getWidth() +40, 50);
+				obstacles.add(currObstacle);
+			}
 			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
 			{
-				double vitesse =myVehicule.getMoteur().getPuissance()/100.0;
-				System.out.println(vitesse);
+				double vitesse = myVehicule.getMoteur().getPuissance()/100.0;
 				scrollingTranslate1 -= 4 * vitesse;
 				scrollingTranslate2 -= 1 * vitesse;
 				scrollingTranslate3 -= 3 * vitesse;
 
+				for(int i = 0; i < obstacles.size(); i++)
+				{
+					obstacles.get(i).setPosition((float) (obstacles.get(i).getX()-4*vitesse), 10);
+					stage.addActor(obstacles.get(i));
+				}
 			}
 			if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
 			{
@@ -427,6 +443,21 @@ public class MyGdxGame extends ApplicationAdapter
 			if(-scrollingTranslate4 > background4.getWidth())
 				scrollingTranslate4 = 0;
 
+			if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+			{
+				if(myVehicule.getPhare().isAllume())
+				{
+					myVehicule.getPhare().eteindre();
+					stage.getActors().get(stage.getActors().indexOf(lumiereImg,true)).setVisible(false);
+				}
+				else
+				{
+					myVehicule.getPhare().allumer();
+					lumiereImg.setPosition(stage.getWidth()+340 - myVehicule.getPhare().getDistanceEclairage(), myVehicule.getRoue().getHauteur()-100);
+					stage.addActor(lumiereImg);
+					stage.getActors().get(stage.getActors().indexOf(lumiereImg,true)).setVisible(true);
+				}
+			}
 
 			phareAffiche.setPosition(stage.getWidth()+300 - myVehicule.getPhare().getDistanceEclairage(), myVehicule.getRoue().getHauteur()+20);
 			stage.addActor(phareAffiche);

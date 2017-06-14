@@ -47,6 +47,11 @@ public class PhareHalogene implements Phare {
     }
 
     @Override
+    public boolean isAllume() {
+        return allume;
+    }
+
+    @Override
     public Texture getTexture() {
         return new Texture(Gdx.files.internal("core/assets/littleLights.png"));
     }
