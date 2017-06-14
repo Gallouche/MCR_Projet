@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Texture;
  * Created by gallouche on 26/05/17.
  */
 public class PhareLED implements Phare {
-    private final int DISTANCEECLAIRAGE = 1300;
-    private final int CONSOMATION = 8;
+    private final int DISTANCEECLAIRAGE = 1400;
+    private final int CONSOMATION = 70;
     private int energie;
     private boolean allume;
 

@@ -2,7 +2,6 @@ package com.mygdx.game.roue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.obstacle.Obstacle;
 
 /**
  * Created by User on 26.05.2017.
@@ -18,8 +17,8 @@ public class RoueRenforcee implements Roue {
    private int VITESSE_MAX = 80;
 
    public RoueRenforcee() {
-      this.solidite = 100;
-      this.coeff = 0.7;
+      this.solidite = 1000;
+      this.coeff = 0.8;
       this.hauteurCm = 65;
    }
 
@@ -42,26 +41,17 @@ public class RoueRenforcee implements Roue {
     */
    @Override
    public double getCoeffFrottement() {
-      if (solidite == 0) {
-         return 1.0;
-      }
-
       return coeff;
    }
 
    /**
     * Collision avec un obstacle.
-    *
-    * @param obstacle l'obstacle heurté
     */
    @Override
-   public void collision(Obstacle obstacle, double vitesse) {
-      // Si vitesse plus grande que 80km/h => collision possible
-      if (vitesse > VITESSE_MAX && obstacle.getHauteur() > hauteurCm / 2) {
-         solidite -= 5;
-      } else {
-         obstacle.destruire();
-      }
+   public void collision(boolean grosseCollision) {
+
+      if(grosseCollision)
+         solidite -= 70;
 
    }
 

@@ -6,7 +6,6 @@
 package com.mygdx.game.roue;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.obstacle.Obstacle;
 
 /**
  * Interface pour une Roue. Une Roue permet de déterminer un coefficient 
@@ -31,9 +30,8 @@ public interface Roue {
     
     /**
      * Collision avec un obstacle.
-     * @param obstacle l'obstacle heurté
      */
-    public void collision(Obstacle obstacle, double vitesse);
+    public void collision(boolean grosseCollision);
     
     /**
      * La solidité actuelle de la roue. Une solidité de 0 devrait

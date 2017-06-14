@@ -2,7 +2,6 @@ package com.mygdx.game.roue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.mygdx.game.obstacle.Obstacle;
 
 /**
  * Created by User on 26.05.2017.
@@ -20,8 +19,8 @@ public class RoueFragile implements Roue {
    private int VITESSE_MAX;
 
    public RoueFragile() {
-      this.solidite = 100;
-      this.coeff = 0.2;
+      this.solidite = 1000;
+      this.coeff = 1.2;
       this.hauteurCm = 30;
    }
 
@@ -44,28 +43,19 @@ public class RoueFragile implements Roue {
     */
    @Override
    public double getCoeffFrottement() {
-      if (solidite == 0) {
-         return 1.0;
-      }
 
       return coeff;
    }
 
    /**
     * Collision avec un obstacle.
-    *
-    * @param obstacle l'obstacle heurté
     */
    @Override
-   public void collision(Obstacle obstacle, double vitesse) {
-      // Si vitesse plus grande que 30km/h => collision possible
-      if (vitesse > VITESSE_MAX && hauteurCm / 2 < obstacle.getHauteur()) {
-         // Si l'hauteur de l'obstacle dépasse la moitié de la hauteur de la roue => Collision
-         solidite -= 50;
-
-      } else {
-         obstacle.destruire();
-      }
+   public void collision(boolean grosseCollision) {
+      if(grosseCollision)
+         solidite -= 120;
+      else
+         solidite -= 30;
    }
 
    /**

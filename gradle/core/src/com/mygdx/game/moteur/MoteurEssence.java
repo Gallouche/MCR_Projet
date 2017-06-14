@@ -26,7 +26,7 @@ public class MoteurEssence implements Moteur {
    public MoteurEssence() {
       allume = false;
       temperature = 0;
-      puissance = 280;
+      puissance = 350;
    }
    
    /**

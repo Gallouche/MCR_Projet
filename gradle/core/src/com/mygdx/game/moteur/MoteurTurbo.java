@@ -14,7 +14,7 @@ public class MoteurTurbo implements Moteur {
    // Température à l'allumage
    public static final int TEMPERATURE_ALLUMAGE = 40;
    // puissance de base
-   private static final int PUISSANCE = 350;
+   private static final int PUISSANCE = 400;
    // Générateur aléatoire
    private final Random rand;
    
@@ -22,7 +22,7 @@ public class MoteurTurbo implements Moteur {
    private long recuperation;
    
    // Temps nécessaire en millisecondes pour récupérer
-   private static final int TEMPS_RECUPERATION = 3000; // 3 secondes
+   private static final int TEMPS_RECUPERATION = 2000; // 3 secondes
    private int puissanceEffective;
    /**
     * Constructeur. Initialise les attributs et le générateur aléatoire.
@@ -85,7 +85,7 @@ public class MoteurTurbo implements Moteur {
       }
       
       // Calculer la puissance sinon
-      if (rand.nextInt(1000) < 5) {
+      if (rand.nextInt(2000) < 5) {
          eteindre();
          recuperation = System.currentTimeMillis();
          puissanceEffective += 50;

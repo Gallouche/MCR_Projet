@@ -16,4 +16,6 @@ public interface Vehicule {
     public Roue getRoue();
     public Moteur getMoteur();
     public Phare getPhare();
+    public int getPuissance();
+    public double getLife();
 }

@@ -3,14 +3,17 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.mygdx.game.moteur.Moteur;
@@ -41,7 +44,7 @@ public class MyGdxGame extends ApplicationAdapter
 	Image backgroundScroll1, backgroundScroll2, backgroundScrollBack1, backgroundScrollBack2,
 			backgroundScrollBackBack1, backgroundScrollBackBack2,
 			backgroundScrollBackBackBack1, backgroundScrollBackBackBack2, backgroundSun, voitureS, wheelTurboS1, wheelTurboS2,
-			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche, lumiereImg;
+			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche, lumiereImg, timer, sous_timer, sous_life, life;
 	List<Image> listClouds;
 	List<Image> obstacles;
 	int scrollingTranslate1 = 0;
@@ -49,7 +52,7 @@ public class MyGdxGame extends ApplicationAdapter
 	int scrollingTranslate3 = 0;
 	int scrollingTranslate4 = 0;
 	int rand1, rand2, rand3, rand4;
-
+	int distance;
 	Stage stage, menuStage;
 	Texture menuTexture, buttonSelectedTex, buttonNotSelectedTex, buttonStart, buttonStartOn;
 	Actor menu;
@@ -59,20 +62,31 @@ public class MyGdxGame extends ApplicationAdapter
 	Image buttonBigLight, buttonMiddleLight, buttonSmallLight;
 	Image start;
 
+	private long timeStart;
 	String carSelection;
 
 	Moteur myMoteur;
 	Phare myPhare;
 	Roue myRoue;
 	Vehicule myVehicule;
-
+	Image obstacleCasse;
+	Label distanceScore;
+	Label distanceScoreOld;
 
 	boolean menuOver;
 	boolean cloud1MovingRight, cloud2MovingRight, cloud3MovingRight, cloud4MovingRight;
 	boolean lumOn;
+	boolean timeUp, lifeDown;
 	@Override
 	public void create ()
 	{
+		distance = 0;
+		lifeDown = false;
+		timeUp = false;
+		sous_timer = new Image(new Texture(Gdx.files.internal("core/assets/sous_timer.png")));
+		timer = new Image(new Texture(Gdx.files.internal("core/assets/timer.png")));
+		sous_life = new Image(new Texture(Gdx.files.internal("core/assets/sous_timer.png")));
+		life = new Image(new Texture(Gdx.files.internal("core/assets/life.png")));
 		obstacles = new ArrayList<Image>();
 		lumOn = false;
 		myMoteur = new MoteurEssence();
@@ -89,6 +103,7 @@ public class MyGdxGame extends ApplicationAdapter
 		buttonNotSelectedTex = new Texture(Gdx.files.internal("core/assets/buttonNotSelect.png"));
 		buttonStart = new Texture(Gdx.files.internal("core/assets/startButton.png"));
 		buttonStartOn = new Texture(Gdx.files.internal("core/assets/startButton-on.png"));
+		obstacleCasse = new Image(new Texture(Gdx.files.internal("core/assets/rockBroken.png")));
 
 		lumiere = new Texture(Gdx.files.internal("core/assets/lumiereOn.png"));
 		lumiereImg = new Image(lumiere);
@@ -242,6 +257,8 @@ public class MyGdxGame extends ApplicationAdapter
 				roueAffichee2 = new Image((myVehicule.getRoue().getTexture()));
 				phareAffiche = new Image(myVehicule.getPhare().getTexture());
 				menuOver = false;
+				timeStart = System.currentTimeMillis();
+
 			}
 		});
 		start.addListener(new InputListener() {
@@ -320,6 +337,14 @@ public class MyGdxGame extends ApplicationAdapter
 	@Override
 	public void render ()
 	{
+		//temps fini
+		if(timeUp || lifeDown)
+		{
+			Image scores = new Image(new Texture(Gdx.files.internal("core/assets/scores.png")));
+			scores.setWidth(stage.getWidth());
+			scores.setHeight(stage.getHeight());
+			stage.addActor(scores);
+		}
 		if(cloud1MovingRight &&cloudS1.getX() > stage.getWidth())
 		{
 			rand1 = rand1 * (-1);
@@ -404,6 +429,26 @@ public class MyGdxGame extends ApplicationAdapter
 
 		if(!menuOver)
 		{
+			Long currentTime = System.currentTimeMillis() - timeStart;
+			if(currentTime/60000.0 > 1.0)
+			{
+				timeUp = true;
+
+			}
+			if(myVehicule.getLife() < 0)
+			{
+				lifeDown = true;
+
+			}
+			sous_timer.setPosition(stage.getWidth()-sous_timer.getWidth()-30, stage.getHeight()-sous_timer.getHeight() - 20);
+			timer.setWidth(sous_timer.getWidth()-6 - (float)((sous_timer.getWidth())*currentTime/60000));
+			timer.setPosition(sous_timer.getX()+4, sous_timer.getY()+4);
+
+			sous_life.setPosition(stage.getWidth()-sous_life.getWidth()-30, stage.getHeight()-sous_life.getHeight() - 120);
+
+			life.setWidth((float) ((sous_life.getWidth()-6) *myVehicule.getLife()));
+			life.setPosition(sous_life.getX()+4, sous_life.getY()+4);
+
 			Random random = new Random();
 			int currRand = random.nextInt(1000);
 			if(currRand < 10)
@@ -413,17 +458,62 @@ public class MyGdxGame extends ApplicationAdapter
 				currObstacle.setPosition(stage.getWidth() +40, 50);
 				obstacles.add(currObstacle);
 			}
-			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.LEFT))
 			{
-				double vitesse = myVehicule.getMoteur().getPuissance()/100.0;
+				double vitesse;
+				if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+					 vitesse = myVehicule.getPuissance()/100.0;
+				else
+					vitesse = myVehicule.getPuissance()/150.0;
+				if(vitesse < 1 && myVehicule.getMoteur().estAllume())
+					vitesse = 1;
+				if(!myVehicule.getMoteur().estAllume())
+					vitesse = 0;
 				scrollingTranslate1 -= 4 * vitesse;
+				distance+= 4*vitesse;
+
 				scrollingTranslate2 -= 1 * vitesse;
 				scrollingTranslate3 -= 3 * vitesse;
 
 				for(int i = 0; i < obstacles.size(); i++)
 				{
 					obstacles.get(i).setPosition((float) (obstacles.get(i).getX()-4*vitesse), 10);
-					stage.addActor(obstacles.get(i));
+					if(!myVehicule.getPhare().isAllume() &&
+							obstacles.get(i).getX() > voitureS.getX() + voitureS.getWidth() + 150) // permet d afficher l'obstacle avec lumiere eteintes a petite distance
+						obstacles.get(i).setVisible(false);
+					else
+					{
+						obstacles.get(i).setVisible(true);
+					}
+					if(obstacles.get(i).getX() < voitureS.getX()+voitureS.getWidth() && obstacles.get(i).getX() > voitureS.getX()+voitureS.getWidth()-100 && Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+					{
+						obstacles.get(i).setDrawable(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("core/assets/rockBroken.png")))));
+						obstacles.get(i).setHeight(400);
+						obstacles.get(i).setWidth(400);
+					}
+					if(obstacles.get(i).getX() < voitureS.getX() + voitureS.getWidth()
+							&& obstacles.get(i).getX() > voitureS.getX() + voitureS.getWidth()-25
+							&& Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+					{
+						obstacles.get(i).setX(obstacles.get(i).getX() -30);
+						myVehicule.getRoue().collision(true);
+					}
+					else if(obstacles.get(i).getX() == voitureS.getX() + voitureS.getWidth()
+							&& obstacles.get(i).getX() > voitureS.getX() + voitureS.getWidth()-25
+							&& Gdx.input.isKeyPressed(Input.Keys.LEFT))
+					{
+						obstacles.get(i).setX(obstacles.get(i).getX() -30);
+						myVehicule.getRoue().collision(false);
+					}
+
+					//enelver objets sorti du cadre
+					if(obstacles.get(i).getX() < (-1)*obstacles.get(i).getWidth())
+					{
+						obstacles.remove(i);
+					}
+					else {
+						stage.addActor(obstacles.get(i));
+					}
 				}
 			}
 			if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
@@ -476,7 +566,35 @@ public class MyGdxGame extends ApplicationAdapter
 				roueAffichee1.setRotation(roueAffichee1.getRotation() - 5);
 				roueAffichee2.setRotation(roueAffichee2.getRotation() - 5);
 			}
+
+			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+				roueAffichee1.setOrigin(roueAffichee1.getWidth()/2, roueAffichee1.getHeight()/2);
+				roueAffichee2.setOrigin(roueAffichee2.getWidth()/2, roueAffichee2.getHeight()/2);
+
+				roueAffichee1.setRotation(roueAffichee1.getRotation() + 5);
+				roueAffichee2.setRotation(roueAffichee2.getRotation() + 5);
+			}
+			Label.LabelStyle textStyle;
+			BitmapFont font = new BitmapFont();
+
+			textStyle = new Label.LabelStyle();
+			textStyle.font = font;
+			textStyle.fontColor = Color.BLACK;
+			distanceScore = new Label("distance :  "+Integer.toString(distance),textStyle);
+			distanceScore.setFontScale(3f,3f);
+			distanceScore.setPosition(stage.getWidth()-400,stage.getHeight()-250);
+			stage.getActors().removeValue(distanceScoreOld,true);
+			stage.addActor(distanceScore);
+			distanceScoreOld = distanceScore;
+
+			stage.addActor(sous_timer);
+			stage.addActor(timer);
+
+			stage.addActor(sous_life);
+			stage.addActor(life);
+
 		}
+
 		stage.draw();
 
 		if(menuOver) {

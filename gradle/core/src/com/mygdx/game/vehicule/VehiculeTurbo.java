@@ -43,4 +43,15 @@ public class VehiculeTurbo implements Vehicule
     public Phare getPhare(){
         return phare;
     }
+
+
+    @Override
+    public int getPuissance() {
+        return (int)((moteur.getPuissance() - phare.getConsommation())*roue.getCoeffFrottement() + 40);
+    }
+
+    @Override
+    public double getLife() {
+        return roue.getSolidite()/1000.0;
+    }
 }

@@ -43,4 +43,14 @@ public class VehiculeNormal implements Vehicule{
     public Phare getPhare(){
         return phare;
     }
+
+    @Override
+    public int getPuissance(){
+        return (int)((moteur.getPuissance() - phare.getConsommation())*roue.getCoeffFrottement());
+    }
+
+    @Override
+    public double getLife() {
+        return (roue.getSolidite() + 300)/1300.0;
+    }
 }
