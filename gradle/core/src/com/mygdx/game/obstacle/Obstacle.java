@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
- * @author mathieu
+ * La classe Obstacle représente des obstacles qui peuvent apparaître 
+ * devant la voiture. 
+ * 
+ * @author Mathieu Monteverde
  */
 public class Obstacle {
     ArrayList<Texture> textures = new ArrayList<Texture>();
@@ -28,9 +30,6 @@ public class Obstacle {
 
         Random random = new Random();
         currentTexture = textures.get(random.nextInt(4));
-    }
-    public int getHauteur() {
-        return 0;
     }
     public Texture getTexture()
     {
