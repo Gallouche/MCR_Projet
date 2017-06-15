@@ -81,9 +81,9 @@ public class MyGdxGame extends ApplicationAdapter
 	@Override
 	public void create ()
 	{
-		lifeText = new Image(new Texture(Gdx.files.internal("core/assets/lifeText.png")));
-		timeText = new Image(new Texture(Gdx.files.internal("core/assets/timeText.png")));
-		distanceText = new Image(new Texture(Gdx.files.internal("core/assets/distanceText.png")));
+		lifeText = new Image(new Texture(Gdx.files.internal("lifeText.png")));
+		timeText = new Image(new Texture(Gdx.files.internal("timeText.png")));
+		distanceText = new Image(new Texture(Gdx.files.internal("distanceText.png")));
 
 		distance = 0;
 		lifeDown = false;
@@ -566,20 +566,21 @@ public class MyGdxGame extends ApplicationAdapter
 			roueAffichee2.setPosition(stage.getWidth()+235- myVehicule.getPhare().getDistanceEclairage(), 20);
 			stage.addActor(roueAffichee2);
 
-			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+			if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && myVehicule.getMoteur().estAllume()) {
 				roueAffichee1.setOrigin(roueAffichee1.getWidth()/2, roueAffichee1.getHeight()/2);
 				roueAffichee2.setOrigin(roueAffichee2.getWidth()/2, roueAffichee2.getHeight()/2);
 
-				roueAffichee1.setRotation(roueAffichee1.getRotation() - 5);
-				roueAffichee2.setRotation(roueAffichee2.getRotation() - 5);
+
+				roueAffichee1.setRotation(roueAffichee1.getRotation() - (int)(5* myVehicule.getMoteur().getPuissance()/350.0));
+				roueAffichee2.setRotation(roueAffichee2.getRotation() - (int)(5* myVehicule.getMoteur().getPuissance()/350.0));
 			}
 
-			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+			if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && myVehicule.getMoteur().estAllume()) {
 				roueAffichee1.setOrigin(roueAffichee1.getWidth()/2, roueAffichee1.getHeight()/2);
 				roueAffichee2.setOrigin(roueAffichee2.getWidth()/2, roueAffichee2.getHeight()/2);
 
-				roueAffichee1.setRotation(roueAffichee1.getRotation() + 5);
-				roueAffichee2.setRotation(roueAffichee2.getRotation() + 5);
+				roueAffichee1.setRotation(roueAffichee1.getRotation() + (int)(5* myVehicule.getMoteur().getPuissance()/350.0));
+				roueAffichee2.setRotation(roueAffichee2.getRotation() + (int)(5* myVehicule.getMoteur().getPuissance()/350.0));
 			}
 			Label.LabelStyle textStyle;
 			BitmapFont font = new BitmapFont();
@@ -590,7 +591,7 @@ public class MyGdxGame extends ApplicationAdapter
 			distanceScore = new Label("                  :  "+Integer.toString(distance),textStyle);
 			distanceScore.setFontScale(3f,3f);
 			distanceScore.setPosition(stage.getWidth()-400,stage.getHeight()-250);
-			distanceText.setPosition(distanceScore.getX(), distanceScore.getY()-40);
+			distanceText.setPosition(distanceScore.getX(), distanceScore.getY()-30);
 			stage.getActors().removeValue(distanceScoreOld,true);
 			stage.addActor(distanceScore);
 			stage.addActor(distanceText);
