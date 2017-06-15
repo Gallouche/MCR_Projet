@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
  * un phare étant alimenté par une certaine quantité d'énergie 
  * et produisant une certaine distance d'éclairage en fonction
  * de cette énergie fournie.
- * @author mathieu
+ * @author Mathieu Monteverde
  */
 public interface Phare {
     /**
