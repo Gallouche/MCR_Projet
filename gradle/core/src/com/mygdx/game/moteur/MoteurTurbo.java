@@ -4,7 +4,7 @@ import java.util.Random;
 
 /**
  *
- * @author mathieu
+ * @author Mathieu Monteverde
  */
 public class MoteurTurbo implements Moteur {
    // Décrit si le moteur est allumé

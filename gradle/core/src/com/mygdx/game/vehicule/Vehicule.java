@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mygdx.game.vehicule;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -10,12 +5,32 @@ import com.mygdx.game.moteur.Moteur;
 import com.mygdx.game.phare.Phare;
 import com.mygdx.game.roue.Roue;
 
-public interface Vehicule {
+/**
+ *
+ * @author mathieu
+ */
+public abstract class Vehicule {
+    private Roue roue;
+    private Phare phare;
+    private Moteur moteur;
+    
+    public Vehicule(Roue roue, Phare phare, Moteur moteur) {
+       this.roue = roue;
+       this.phare = phare;
+       this.moteur = moteur;
+    }
+   
 
-    public Texture getTexture();
-    public Roue getRoue();
-    public Moteur getMoteur();
-    public Phare getPhare();
-    public int getPuissance();
-    public double getLife();
+    public abstract Texture getTexture();
+    public Roue getRoue() {
+       return roue;
+    }
+    public Moteur getMoteur() {
+       return moteur;
+    }
+    public Phare getPhare() {
+       return phare;
+    }
+    public  abstract int getPuissance();
+    public  abstract double getLife();
 }

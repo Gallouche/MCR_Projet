@@ -51,6 +51,6 @@ public class PhareLED implements Phare {
     }
     @Override
     public Texture getTexture() {
-        return new Texture(Gdx.files.internal("core/assets/middleLights.png"));
+        return new Texture(Gdx.files.internal("middleLights.png"));
     }
 }

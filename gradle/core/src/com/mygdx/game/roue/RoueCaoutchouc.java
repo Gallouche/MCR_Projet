@@ -14,7 +14,7 @@ public class RoueCaoutchouc implements Roue {
    private int solidite;
    private double coeff; // 0 => grande, 1 => peite
    private int hauteur;
-   private int VITESSE_MAX = 60;
+   private final int VITESSE_MAX = 60;
 
    public RoueCaoutchouc() {
       this.solidite = 1000;
@@ -70,6 +70,6 @@ public class RoueCaoutchouc implements Roue {
    }
 
    public Texture getTexture(){
-      return new Texture(Gdx.files.internal("core/assets/roueCaoutchoucGrand.png"));
+      return new Texture(Gdx.files.internal("roueCaoutchoucGrand.png"));
    }
 }
