@@ -45,7 +45,7 @@ public class MyGdxGame extends ApplicationAdapter
 			backgroundScrollBackBack1, backgroundScrollBackBack2,
 			backgroundScrollBackBackBack1, backgroundScrollBackBackBack2, backgroundSun, voitureS, wheelTurboS1, wheelTurboS2,
 			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche, lumiereImg, timer,
-			sous_timer, sous_life, life, timeText, lifeText;
+			sous_timer, sous_life, life, timeText, lifeText, distanceText;
 	List<Image> listClouds;
 	List<Image> obstacles;
 	int scrollingTranslate1 = 0;
@@ -83,7 +83,7 @@ public class MyGdxGame extends ApplicationAdapter
 	{
 		lifeText = new Image(new Texture(Gdx.files.internal("core/assets/lifeText.png")));
 		timeText = new Image(new Texture(Gdx.files.internal("core/assets/timeText.png")));
-
+		distanceText = new Image(new Texture(Gdx.files.internal("core/assets/distanceText.png")));
 
 		distance = 0;
 		lifeDown = false;
@@ -587,11 +587,13 @@ public class MyGdxGame extends ApplicationAdapter
 			textStyle = new Label.LabelStyle();
 			textStyle.font = font;
 			textStyle.fontColor = Color.BLACK;
-			distanceScore = new Label("distance :  "+Integer.toString(distance),textStyle);
+			distanceScore = new Label("         :  "+Integer.toString(distance),textStyle);
 			distanceScore.setFontScale(3f,3f);
 			distanceScore.setPosition(stage.getWidth()-400,stage.getHeight()-250);
+			distanceText.setPosition(distanceScore.getX(), distanceScore.getY());
 			stage.getActors().removeValue(distanceScoreOld,true);
 			stage.addActor(distanceScore);
+			stage.addActor(distanceText);
 			distanceScoreOld = distanceScore;
 
 			stage.addActor(sous_timer);

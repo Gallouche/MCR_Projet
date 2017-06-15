@@ -9,15 +9,10 @@ import com.mygdx.game.roue.Roue;
 /**
  * 
  */
-<<<<<<< HEAD:gradle/core/src/com/mygdx/game/vehicule/VehiculeSport.java
-public class VehiculeSport implements Vehicule
-{
+public class VehiculeSport extends Vehicule {
     private Roue   roue;
     private Phare  phare;
     private Moteur moteur;
-=======
-public class VehiculeTurbo extends Vehicule {
->>>>>>> 2ff1f0eaa0c708193f7c2edd52c6b9389d2ac927:gradle/core/src/com/mygdx/game/vehicule/VehiculeTurbo.java
 
     public VehiculeSport(Roue r, Phare p, Moteur m)
     {
