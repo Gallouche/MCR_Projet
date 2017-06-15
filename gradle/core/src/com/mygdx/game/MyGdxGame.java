@@ -81,9 +81,9 @@ public class MyGdxGame extends ApplicationAdapter
 	@Override
 	public void create ()
 	{
-		lifeText = new Image(new Texture(Gdx.files.internal("core/assets/lifeText.png")));
-		timeText = new Image(new Texture(Gdx.files.internal("core/assets/timeText.png")));
-		distanceText = new Image(new Texture(Gdx.files.internal("core/assets/distanceText.png")));
+		lifeText = new Image(new Texture(Gdx.files.internal("lifeText.png")));
+		timeText = new Image(new Texture(Gdx.files.internal("timeText.png")));
+		distanceText = new Image(new Texture(Gdx.files.internal("distanceText.png")));
 
 		distance = 0;
 		lifeDown = false;

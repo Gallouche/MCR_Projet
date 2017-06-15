@@ -147,6 +147,7 @@
       <method isAbstract="true" isStatic="false" name="allumer" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="true" isStatic="false" name="eteindre" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="true" isStatic="false" name="getConsommation" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="isAllume" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
     <entity entityType="INTERFACE" id="3927" isAbstract="true" name="Moteur" visibility="PUBLIC">
       <method isAbstract="true" isStatic="false" name="demarrer" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
@@ -256,9 +257,51 @@
       <method isAbstract="false" isStatic="false" name="getTemperature" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
       <method isAbstract="false" isStatic="false" name="estAllume" returnType="boolean" view="DEFAULT" visibility="PUBLIC"/>
     </entity>
-    <entity entityType="CLASS" id="4400" isAbstract="false" name="PhareEconome" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="4448" isAbstract="false" name="PhareIon" visibility="PUBLIC"/>
-    <entity entityType="CLASS" id="4449" isAbstract="false" name="PhareClignotant" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="4400" isAbstract="false" name="PhareXenon" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="DISTANCEECLAIRAGE" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="CONSOMATION" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="energie" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="allume" type="boolean" visibility="PRIVATE"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="PhareXenon" returnType="" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="donnerEnergie" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="energie" type="int"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="getDistanceEclairage" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="allumer" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="eteindre" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getConsommation" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="isAllume" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="4448" isAbstract="false" name="PhareHalogene" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="DISTANCEECLAIRAGE" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="CONSOMMATION" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="energie" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="allume" type="boolean" visibility="PRIVATE"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="PhareHalogene" returnType="" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="donnerEnergie" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="energie" type="int"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="getDistanceEclairage" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="allumer" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="eteindre" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getConsommation" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="isAllume" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="4449" isAbstract="false" name="PhareLed" visibility="PUBLIC">
+      <attribute const="false" defaultValue="" isStatic="false" name="attributeDISTANCEECLAIRAGE" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="CONSOMMATION" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="energie" type="int" visibility="PRIVATE"/>
+      <attribute const="false" defaultValue="" isStatic="false" name="allume" type="boolean" visibility="PRIVATE"/>
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="PhareLed" returnType="" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="donnerEnergie" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="energie" type="int"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="getDistanceEclairage" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="allumer" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="eteindre" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getConsommation" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="isAllume" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
     <entity entityType="CLASS" id="4495" isAbstract="false" name="Obstacle" visibility="PUBLIC">
       <attribute const="false" defaultValue="" isStatic="false" name="currentTexture" type="Texture" visibility="PRIVATE"/>
       <method isAbstract="false" isStatic="false" name="getTexture" returnType="Texture" view="DEFAULT" visibility="PUBLIC"/>
@@ -272,16 +315,16 @@
           <y>91</y>
         </point>
         <point>
-          <x>1211</x>
+          <x>1401</x>
           <y>91</y>
         </point>
         <point>
-          <x>1351</x>
+          <x>1401</x>
           <y>191</y>
         </point>
       </line>
       <labelAssociation>
-        <x>855</x>
+        <x>950</x>
         <y>95</y>
         <w>0</w>
         <h>18</h>
@@ -293,7 +336,7 @@
         <h>18</h>
       </roleAssociation>
       <roleAssociation>
-        <x>1315</x>
+        <x>1365</x>
         <y>169</y>
         <w>0</w>
         <h>18</h>
@@ -305,8 +348,8 @@
         <h>18</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>1334</x>
-        <y>171</y>
+        <x>1379</x>
+        <y>165</y>
         <w>8</w>
         <h>18</h>
       </multipliciteAssociation>
@@ -318,7 +361,7 @@
           <y>121</y>
         </point>
         <point>
-          <x>1001</x>
+          <x>1031</x>
           <y>121</y>
         </point>
         <point>
@@ -327,7 +370,7 @@
         </point>
       </line>
       <labelAssociation>
-        <x>750</x>
+        <x>765</x>
         <y>125</y>
         <w>0</w>
         <h>18</h>
@@ -351,8 +394,8 @@
         <h>18</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>1017</x>
-        <y>169</y>
+        <x>1010</x>
+        <y>167</y>
         <w>8</w>
         <h>18</h>
       </multipliciteAssociation>
@@ -406,60 +449,60 @@
     <relationView color="-12566464" relationId="4464">
       <line>
         <point>
-          <x>1501</x>
+          <x>1521</x>
           <y>431</y>
         </point>
         <point>
-          <x>1611</x>
+          <x>1521</x>
           <y>411</y>
         </point>
         <point>
-          <x>1411</x>
+          <x>1321</x>
           <y>411</y>
         </point>
         <point>
-          <x>1411</x>
-          <y>325</y>
+          <x>1321</x>
+          <y>340</y>
         </point>
       </line>
     </relationView>
     <relationView color="-12566464" relationId="4463">
       <line>
         <point>
-          <x>1491</x>
-          <y>741</y>
+          <x>1531</x>
+          <y>701</y>
         </point>
         <point>
-          <x>1441</x>
-          <y>411</y>
+          <x>1531</x>
+          <y>671</y>
         </point>
         <point>
-          <x>1411</x>
-          <y>411</y>
+          <x>1321</x>
+          <y>671</y>
         </point>
         <point>
-          <x>1411</x>
-          <y>325</y>
+          <x>1321</x>
+          <y>340</y>
         </point>
       </line>
     </relationView>
     <relationView color="-12566464" relationId="4462">
       <line>
         <point>
-          <x>1501</x>
-          <y>891</y>
+          <x>1531</x>
+          <y>991</y>
         </point>
         <point>
-          <x>1271</x>
-          <y>411</y>
+          <x>1531</x>
+          <y>951</y>
         </point>
         <point>
-          <x>1411</x>
-          <y>411</y>
+          <x>1321</x>
+          <y>951</y>
         </point>
         <point>
-          <x>1411</x>
-          <y>325</y>
+          <x>1321</x>
+          <y>340</y>
         </point>
       </line>
     </relationView>
@@ -571,12 +614,12 @@
         </point>
         <point>
           <x>1131</x>
-          <y>1051</y>
+          <y>1091</y>
         </point>
       </line>
       <labelAssociation>
         <x>1135</x>
-        <y>1025</y>
+        <y>1045</y>
         <w>0</w>
         <h>18</h>
       </labelAssociation>
@@ -588,7 +631,7 @@
       </roleAssociation>
       <roleAssociation>
         <x>1135</x>
-        <y>1029</y>
+        <y>1069</y>
         <w>0</w>
         <h>18</h>
       </roleAssociation>
@@ -600,7 +643,7 @@
       </multipliciteAssociation>
       <multipliciteAssociation>
         <x>1108</x>
-        <y>1027</y>
+        <y>1067</y>
         <w>8</w>
         <h>18</h>
       </multipliciteAssociation>
@@ -613,12 +656,12 @@
         </point>
         <point>
           <x>331</x>
-          <y>881</y>
+          <y>861</y>
         </point>
       </line>
       <labelAssociation>
         <x>335</x>
-        <y>827</y>
+        <y>817</y>
         <w>0</w>
         <h>18</h>
       </labelAssociation>
@@ -630,19 +673,19 @@
       </roleAssociation>
       <roleAssociation>
         <x>335</x>
-        <y>857</y>
+        <y>837</y>
         <w>0</w>
         <h>18</h>
       </roleAssociation>
       <multipliciteAssociation>
-        <x>317</x>
-        <y>770</y>
+        <x>308</x>
+        <y>772</y>
         <w>8</w>
         <h>18</h>
       </multipliciteAssociation>
       <multipliciteAssociation>
-        <x>317</x>
-        <y>857</y>
+        <x>309</x>
+        <y>833</y>
         <w>8</w>
         <h>18</h>
       </multipliciteAssociation>
@@ -689,26 +732,26 @@
     </componentView>
     <componentView color="-2079" componentID="4449" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>1410</x>
+        <x>1400</x>
         <y>430</y>
-        <w>150</w>
-        <h>55</h>
+        <w>250</w>
+        <h>220</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="4448" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
         <x>1410</x>
-        <y>740</y>
-        <w>150</w>
-        <h>55</h>
+        <y>700</y>
+        <w>240</w>
+        <h>220</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="4400" displayAttributes="true" displayDefault="true" displayMethods="true">
       <geometry>
-        <x>1420</x>
-        <y>890</y>
-        <w>150</w>
-        <h>55</h>
+        <x>1410</x>
+        <y>990</y>
+        <w>240</w>
+        <h>220</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="4396" displayAttributes="true" displayDefault="true" displayMethods="true">
@@ -780,13 +823,13 @@
         <x>1280</x>
         <y>190</y>
         <w>250</w>
-        <h>134</h>
+        <h>149</h>
       </geometry>
     </componentView>
     <componentView color="-2079" componentID="19348" displayAttributes="false" displayDefault="false" displayMethods="false">
       <geometry>
         <x>1050</x>
-        <y>1050</y>
+        <y>1090</y>
         <w>160</w>
         <h>35</h>
       </geometry>
@@ -794,7 +837,7 @@
     <componentView color="-2079" componentID="20209" displayAttributes="false" displayDefault="false" displayMethods="false">
       <geometry>
         <x>190</x>
-        <y>880</y>
+        <y>860</y>
         <w>270</w>
         <h>35</h>
       </geometry>
