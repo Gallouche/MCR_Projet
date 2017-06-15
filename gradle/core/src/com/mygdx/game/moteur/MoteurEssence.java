@@ -2,7 +2,7 @@ package com.mygdx.game.moteur;
 
 /**
  *
- * @author mathieu
+ * @author Mathieu Monteverde
  */
 public class MoteurEssence implements Moteur {
    // Décrit si le moteur est allumé.
