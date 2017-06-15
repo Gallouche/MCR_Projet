@@ -46,6 +46,7 @@ public class MyGdxGame extends ApplicationAdapter
 			backgroundScrollBackBackBack1, backgroundScrollBackBackBack2, backgroundSun, voitureS, wheelTurboS1, wheelTurboS2,
 			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche, lumiereImg, timer,
 			sous_timer, sous_life, life, timeText, lifeText, distanceText;
+
 	List<Image> listClouds;
 	List<Image> obstacles;
 	int scrollingTranslate1 = 0;
@@ -53,7 +54,8 @@ public class MyGdxGame extends ApplicationAdapter
 	int scrollingTranslate3 = 0;
 	int scrollingTranslate4 = 0;
 	int rand1, rand2, rand3, rand4;
-	int distance;
+	int distance, distanceFini;
+	int distScore;
 	Stage stage, menuStage;
 	Texture menuTexture, buttonSelectedTex, buttonNotSelectedTex, buttonStart, buttonStartOn;
 	Actor menu;
@@ -73,14 +75,17 @@ public class MyGdxGame extends ApplicationAdapter
 	Image obstacleCasse;
 	Label distanceScore;
 	Label distanceScoreOld;
+	Label distanceFinal;
 
 	boolean menuOver;
 	boolean cloud1MovingRight, cloud2MovingRight, cloud3MovingRight, cloud4MovingRight;
 	boolean lumOn;
 	boolean timeUp, lifeDown;
+	boolean fini;
 	@Override
 	public void create ()
 	{
+		fini = true;
 		lifeText = new Image(new Texture(Gdx.files.internal("lifeText.png")));
 		timeText = new Image(new Texture(Gdx.files.internal("timeText.png")));
 		distanceText = new Image(new Texture(Gdx.files.internal("distanceText.png")));
@@ -345,6 +350,12 @@ public class MyGdxGame extends ApplicationAdapter
 		//temps fini
 		if(timeUp || lifeDown)
 		{
+			if(fini)
+			{
+				distanceFini = distance;
+				fini = false;
+
+			}
 			Image scores = new Image(new Texture(Gdx.files.internal("scores.png")));
 			scores.setWidth(stage.getWidth());
 			scores.setHeight(stage.getHeight());
@@ -593,7 +604,8 @@ public class MyGdxGame extends ApplicationAdapter
 			distanceScore.setPosition(stage.getWidth()-400,stage.getHeight()-250);
 			distanceText.setPosition(distanceScore.getX(), distanceScore.getY()-30);
 			stage.getActors().removeValue(distanceScoreOld,true);
-			stage.addActor(distanceScore);
+			if(!timeUp && !lifeDown)
+				stage.addActor(distanceScore);
 			stage.addActor(distanceText);
 			distanceScoreOld = distanceScore;
 
@@ -605,7 +617,14 @@ public class MyGdxGame extends ApplicationAdapter
 
 			stage.addActor(sous_life);
 			stage.addActor(life);
+			if(timeUp || lifeDown)
+			{
 
+				distanceFinal = new Label(Integer.toString(distanceFini),textStyle);
+				distanceFinal.setFontScale(3f,3f);
+				distanceFinal.setPosition(stage.getWidth()-850,stage.getHeight()-320);
+				stage.addActor(distanceFinal);
+			}
 		}
 
 		stage.draw();
