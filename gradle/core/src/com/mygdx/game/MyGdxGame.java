@@ -620,7 +620,7 @@ public class MyGdxGame extends ApplicationAdapter
 		}
 	}
 	
-	@Override
+	@Override 
 	public void dispose () {
 		background1.dispose();
 	}
