@@ -587,10 +587,10 @@ public class MyGdxGame extends ApplicationAdapter
 			textStyle = new Label.LabelStyle();
 			textStyle.font = font;
 			textStyle.fontColor = Color.BLACK;
-			distanceScore = new Label("         :  "+Integer.toString(distance),textStyle);
+			distanceScore = new Label("                  :  "+Integer.toString(distance),textStyle);
 			distanceScore.setFontScale(3f,3f);
 			distanceScore.setPosition(stage.getWidth()-400,stage.getHeight()-250);
-			distanceText.setPosition(distanceScore.getX(), distanceScore.getY());
+			distanceText.setPosition(distanceScore.getX(), distanceScore.getY()-40);
 			stage.getActors().removeValue(distanceScoreOld,true);
 			stage.addActor(distanceScore);
 			stage.addActor(distanceText);
