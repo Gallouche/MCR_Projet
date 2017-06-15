@@ -9,9 +9,12 @@ import com.mygdx.game.roue.Roue;
 /**
  * 
  */
-public class VehiculeTurbo extends Vehicule {
+public class VehiculeSport extends Vehicule {
+    private Roue   roue;
+    private Phare  phare;
+    private Moteur moteur;
 
-    public VehiculeTurbo(Roue r, Phare p, Moteur m)
+    public VehiculeSport(Roue r, Phare p, Moteur m)
     {
        super(r, p, m);
     }
