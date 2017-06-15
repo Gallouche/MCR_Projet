@@ -7,8 +7,7 @@ import com.mygdx.game.phare.Phare;
 import com.mygdx.game.roue.Roue;
 
 /**
- *
- * @author mathieu
+ * 
  */
 public class VehiculeTurbo extends Vehicule {
 

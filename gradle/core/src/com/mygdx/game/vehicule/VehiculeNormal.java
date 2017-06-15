@@ -8,7 +8,6 @@ import com.mygdx.game.roue.Roue;
 
 /**
  *
- * @author mathieu
  */
 public class VehiculeNormal extends Vehicule{
 

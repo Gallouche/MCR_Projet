@@ -14,7 +14,7 @@ public class RoueRenforcee implements Roue {
    private int solidite;
    private int hauteurCm;
    private double coeff;  // Coef entre 0.5 et 0.8 d'après wiki4
-   private int VITESSE_MAX = 80;
+   private final int VITESSE_MAX = 80;
 
    public RoueRenforcee() {
       this.solidite = 1000;

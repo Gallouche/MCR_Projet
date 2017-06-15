@@ -16,7 +16,7 @@ public class RoueFragile implements Roue {
    private int solidite;
    private int hauteurCm;
    private double coeff;  // Coef entre 0.5 et 0.8 d'après wiki
-   private int VITESSE_MAX;
+   private final int VITESSE_MAX = 60;
 
    public RoueFragile() {
       this.solidite = 1000;
