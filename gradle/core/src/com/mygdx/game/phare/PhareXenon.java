@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
  * Created by gallouche on 26/05/17.
  */
 public class PhareXenon implements Phare {
-    private final int DISTANCEECLAIRAGE = 2100;
+    private final int DISTANCEECLAIRAGE = 1650;
     private final int CONSOMATION = 150;
     private int energie;
     private boolean allume;

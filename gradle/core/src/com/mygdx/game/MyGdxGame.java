@@ -30,7 +30,7 @@ import com.mygdx.game.roue.RoueFragile;
 import com.mygdx.game.roue.RoueRenforcee;
 import com.mygdx.game.vehicule.Vehicule;
 import com.mygdx.game.vehicule.VehiculeNormal;
-import com.mygdx.game.vehicule.VehiculeTurbo;
+import com.mygdx.game.vehicule.VehiculeSport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,8 @@ public class MyGdxGame extends ApplicationAdapter
 	Image backgroundScroll1, backgroundScroll2, backgroundScrollBack1, backgroundScrollBack2,
 			backgroundScrollBackBack1, backgroundScrollBackBack2,
 			backgroundScrollBackBackBack1, backgroundScrollBackBackBack2, backgroundSun, voitureS, wheelTurboS1, wheelTurboS2,
-			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche, lumiereImg, timer, sous_timer, sous_life, life;
+			cloudS1, cloudS2, cloudS3, cloudS4, roueAffichee1, roueAffichee2, phareAffiche, moteurAffiche, lumiereImg, timer,
+			sous_timer, sous_life, life, timeText, lifeText;
 	List<Image> listClouds;
 	List<Image> obstacles;
 	int scrollingTranslate1 = 0;
@@ -80,6 +81,10 @@ public class MyGdxGame extends ApplicationAdapter
 	@Override
 	public void create ()
 	{
+		lifeText = new Image(new Texture(Gdx.files.internal("core/assets/lifeText.png")));
+		timeText = new Image(new Texture(Gdx.files.internal("core/assets/timeText.png")));
+
+
 		distance = 0;
 		lifeDown = false;
 		timeUp = false;
@@ -249,7 +254,7 @@ public class MyGdxGame extends ApplicationAdapter
 				}
 				else if(carSelection.equals("vehiculeTurbo"))
 				{
-					myVehicule = new VehiculeTurbo(myRoue,myPhare,myMoteur);
+					myVehicule = new VehiculeSport(myRoue,myPhare,myMoteur);
 				}
 
 				voitureS = new Image(myVehicule.getTexture());
@@ -441,6 +446,7 @@ public class MyGdxGame extends ApplicationAdapter
 
 			}
 			sous_timer.setPosition(stage.getWidth()-sous_timer.getWidth()-30, stage.getHeight()-sous_timer.getHeight() - 20);
+			timeText.setPosition(sous_timer.getX()-105, sous_timer.getY());
 			timer.setWidth(sous_timer.getWidth()-6 - (float)((sous_timer.getWidth())*currentTime/60000));
 			timer.setPosition(sous_timer.getX()+4, sous_timer.getY()+4);
 
@@ -448,6 +454,7 @@ public class MyGdxGame extends ApplicationAdapter
 
 			life.setWidth((float) ((sous_life.getWidth()-6) *myVehicule.getLife()));
 			life.setPosition(sous_life.getX()+4, sous_life.getY()+4);
+			lifeText.setPosition(life.getX()-95, life.getY()-10);
 
 			Random random = new Random();
 			int currRand = random.nextInt(1000);
@@ -589,6 +596,9 @@ public class MyGdxGame extends ApplicationAdapter
 
 			stage.addActor(sous_timer);
 			stage.addActor(timer);
+
+			stage.addActor(timeText);
+			stage.addActor(lifeText);
 
 			stage.addActor(sous_life);
 			stage.addActor(life);

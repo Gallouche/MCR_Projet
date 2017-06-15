@@ -15,13 +15,13 @@ import com.mygdx.game.roue.Roue;
  *
  * @author mathieu
  */
-public class VehiculeTurbo implements Vehicule
+public class VehiculeSport implements Vehicule
 {
     private Roue   roue;
     private Phare  phare;
     private Moteur moteur;
 
-    public VehiculeTurbo(Roue r, Phare p, Moteur m)
+    public VehiculeSport(Roue r, Phare p, Moteur m)
     {
         roue   = r;
         phare  = p;
