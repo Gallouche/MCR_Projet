@@ -18,7 +18,7 @@ public class MoteurEssence implements Moteur {
     // Temps auquel le moteur commence à surhcauffer
    private long tempsSurchauffe;
    // Durée nécessaire pour refroidir le moteur
-   public static final int DUREE_REFROIDISSEMENT = 3000; // ms
+   public static final int DUREE_REFROIDISSEMENT = 1800; // ms
    
    /**
     * Constructeur
